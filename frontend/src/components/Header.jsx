@@ -1,5 +1,8 @@
 import React,{ useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import {logout, reset} from "../features/auth/authSlice";
+
 import $ from "jquery";
 
 
@@ -72,6 +75,19 @@ if ($('.scroll-to-target').length) {
 }
 
   },[])
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/")
+  }
+
+
   return (
     <header>
     <div id="sticky-header" className="menu-area transparent-header">
@@ -110,7 +126,7 @@ if ($('.scroll-to-target').length) {
                   <ul>
                     <li className="header-search"><Link to="/search" data-toggle="modal" data-target="#search-modal"><i className="fas fa-search" /></Link></li>
                   
-                    <li className="header-btn"><Link to="/login" className="btn">Sign In</Link></li>
+                    {user ? <li className="header-btn"><button onClick={onLogout} className="btn">Log Out</button></li> : <li className="header-btn"><Link to="/login" className="btn">Sign In</Link></li>}
                   </ul>
                 </div>
               </nav>

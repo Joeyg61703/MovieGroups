@@ -1,21 +1,20 @@
 import React from 'react';
 import Banner from '../components/homeone/Banner';
-import LiveArea from '../components/homeone/LiveArea';
-import NewsletterArea from '../components/homeone/NewsletterArea';
 import Service from '../components/homeone/Service';
 import TopRatedMovies from '../components/homeone/TopRatedMovies';
 import TvSerise from '../components/homeone/TvSerise';
 import UpcomingMovie from '../components/homeone/UpcomingMovie';
 import Footer from '../components/Footer';
 import Header from "../components/Header";
-
+import { useSelector, useDispatch } from 'react-redux';
 
 const Homeone = () => {
+  const {user} = useSelector((state) => state.auth);
   return (
   <div>
       <Header/>
     <main>
-        <Banner/>
+        {!user && <Banner/>}
         <TopRatedMovies/>
         <UpcomingMovie/>
         <Service/>
