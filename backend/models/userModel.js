@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add a password"]
     },
+    movies: {
+        type: [String],
+        default: []
+    }
 },
 {
     timestamps: true

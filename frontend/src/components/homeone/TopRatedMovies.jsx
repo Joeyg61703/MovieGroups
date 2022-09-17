@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
 import Menu from "../UpMovieItemMenu";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {addMovie} from "../../features/movies/movieSlice";
+import {createGoal} from "../../features/goals/goalSlice";
 
 const TopRatedMovies = () => {
   const [movieType, setMovieType] = useState([]);
@@ -9,9 +12,11 @@ const TopRatedMovies = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 
-  const addMovie = () => {
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+  const dispatch = useDispatch();
 
-  }
   
   //returns only the first 4 trending
   const getTrending = async () => {
@@ -141,9 +146,17 @@ const TopRatedMovies = () => {
                     <div className="bottom">
                       <ul>
                       <li className="watch">
-                        <a className="btn d-flex justify-content-center align-items-center" onClick={addMovie}>
-                          <i className="fas fa-plus" /> Add to My Movies
-                        </a>
+                        {user ? (
+                          <button onClick={()=>{
+                            dispatch(addMovie({id}))
+                          }}
+                          type="submit" className="btn d-flex justify-content-center align-items-center">
+                            <i className="fas fa-plus" /> Add to My Movies
+                          </button>
+                        ) :   
+                        (<Link to="/login" className="btn d-flex justify-content-center align-items-center">
+                            <i className="fas fa-plus" /> Add to My Movies
+                          </Link>)}
                       </li>
                         <li>
                           <span className="rating">
