@@ -148,7 +148,7 @@ const TopRatedMovies = () => {
                       <li className="watch">
                         {user ? (
                           <button onClick={()=>{
-                            dispatch(addMovie({id}))
+                            dispatch(addMovie({id, image, title}))
                           }}
                           type="submit" className="btn d-flex justify-content-center align-items-center">
                             <i className="fas fa-plus" /> Add to My Movies

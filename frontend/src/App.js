@@ -9,6 +9,7 @@ import Blogs from './pages/Blogs';
 import BlogDetails from './pages/BlogDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 
 
@@ -45,6 +46,8 @@ function App() {
        <Route exact={true} path="/login" element={<Login/>}/>
 
        <Route exact={true} path="/register" element={<Register/>}/>
+
+       <Route exact={true} path="/profile" element={<Profile/>}/>
       
       </Routes>
   </Router>
