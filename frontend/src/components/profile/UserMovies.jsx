@@ -2,26 +2,40 @@ import React, {useState, useEffect} from 'react'
 import TopRatedMovies from '../homeone/TopRatedMovies'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from "axios";
-import { getMyMovies } from '../../features/movies/movieSlice';
-import {Link} from "react-router-dom"
+import { getMyMovies, deleteMovie } from '../../features/movies/movieSlice';
+import {Link, useNavigate} from "react-router-dom"
 
 const UserMovies = () => {
     const { user, isLoading, isError, isSuccess, message } = useSelector(
         (state) => state.auth
       )
+
       
+    const navigate = useNavigate();  
     const dispatch = useDispatch();
 
     const [myMovies, setMyMovies] = useState([]);
+      
+      
+    const deleteMyMovie = async (id) => {
+      const deletedMovie = await dispatch(deleteMovie(id));
+      console.log(deletedMovie);
+      location.reload();
+    }
 
-
-  
     useEffect(() => {
+
       const awaitMovies = async () => {
         const movies = await dispatch(getMyMovies());
         console.log(movies.payload)
+        // if(!movies.payload){
+        //   console.log("True")
+        //   return (
+        //     <h1>No Movies Found</h1>
+        //   )
+        // }
         setMyMovies(movies.payload);
-     
+        
       };
       awaitMovies();
     }, []);
@@ -37,7 +51,7 @@ const UserMovies = () => {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="section-title text-center mb-50">
-              <h2> {user.name} Movies</h2>
+              <h2> {user && user.name} Movies</h2>
             </div>
           </div>
         </div>
@@ -48,8 +62,8 @@ const UserMovies = () => {
             </div>
           </div>
         </div>
-        <div className="row tr-movie-active">
-          {myMovies.map((elem) => {
+      <div className="row tr-movie-active">
+          {myMovies && myMovies.map((elem) => {
             const {
               movieId: id,
               image,
@@ -88,7 +102,7 @@ const UserMovies = () => {
                       </li>
                         <li>
                           <span className="rating">
-                            <i className="fas fa-thumbs-up" />
+                            <i className="fas fa-trash" onClick={()=>{deleteMyMovie(elem._id)}} />
                       
                           </span>
                         </li>

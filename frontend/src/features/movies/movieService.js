@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/movie";
+const API_URL = "http://localhost:5000/api/movie/";
 
 //Add movie to array within user document
 const addMovie = async (movieData, token) => {
@@ -29,14 +29,14 @@ const getMyMovies = async (token) => {
 }
 
 //Delete Movie
-const deleteMovie = async (movieData, token) => {
+const deleteMovie = async (movieId, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.delete(API_URL + movieData, config);
+    const response = await axios.delete(API_URL + movieId, config);
 
     return response.data;
 }

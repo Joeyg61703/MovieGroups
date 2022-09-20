@@ -119,7 +119,7 @@ if ($('.scroll-to-target').length) {
                         <li><a href="/blog-details">Blog Details</a></li>
                       </ul>
                     </li>
-                    <li><Link to="/feed">My Feed</Link></li>
+                    <li><Link to="/profile">My Profile</Link></li>
                   </ul>
                 </div>
                 <div className="header-action d-none d-md-block">
