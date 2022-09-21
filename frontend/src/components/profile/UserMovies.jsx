@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 import TopRatedMovies from '../homeone/TopRatedMovies'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from "axios";
-import { getMyMovies, deleteMovie } from '../../features/movies/movieSlice';
+import { getMyMovies, deleteMovie, rateMovie } from '../../features/movies/movieSlice';
 import {Link, useNavigate} from "react-router-dom"
+import ReactStars from 'react-stars'
 
 const UserMovies = () => {
     const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -23,11 +24,19 @@ const UserMovies = () => {
       location.reload();
     }
 
+    const rateMyMovie = async (event, id) => {
+      console.log(event)
+      const movie = await dispatch(rateMovie({rating: event, id: id}));
+      console.log(movie)
+    }
+
     useEffect(() => {
 
       const awaitMovies = async () => {
         const movies = await dispatch(getMyMovies());
+
         console.log(movies.payload)
+        console.log(user._id)
         // if(!movies.payload){
         //   console.log("True")
         //   return (
@@ -68,6 +77,8 @@ const UserMovies = () => {
               movieId: id,
               image,
               title,
+              users,
+
             } = elem;
 
             return (
@@ -98,7 +109,7 @@ const UserMovies = () => {
                     <div className="bottom">
                       <ul>
                       <li className="watch">
-                        {/* React stars here */}
+                        <ReactStars value={users.filter((obj) => obj.user === user._id)[0].rating || 0} count={5} onChange={(event)=>{rateMyMovie(event, elem._id)}} color2={"#c31313"} size={24}/>
                       </li>
                         <li>
                           <span className="rating">

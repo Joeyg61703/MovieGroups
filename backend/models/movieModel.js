@@ -15,9 +15,15 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
     users:  [{
-        type:[mongoose.Schema.Types.ObjectId],
-        ref: 'User', 
-        default: []
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true 
+        },
+        rating:{
+            type: Number,
+            default: 0
+        }
     }],
 
     userRating:{

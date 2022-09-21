@@ -15,10 +15,16 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please add a password"]
     },
     movies: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Movie', 
-        default: [],
-        required: true
+        movie:{ 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Movie', 
+            required: true
+        },
+        rating:{
+            type: Number,
+            default: 0,
+            required: true
+        }
     }]
 },
 {

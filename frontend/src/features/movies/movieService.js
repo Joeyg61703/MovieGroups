@@ -40,10 +40,26 @@ const deleteMovie = async (movieId, token) => {
 
     return response.data;
 }
+
+//Rate Movie
+const rateMovie = async (movieData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${API_URL}rate/${movieData.id}/${movieData.rating}`, config);
+
+    return response.data;
+}
+
+
 const movieService = {
     addMovie,
     getMyMovies,
-    deleteMovie
+    deleteMovie,
+    rateMovie
 }
 
 export default movieService;
