@@ -16,10 +16,6 @@ const Homeone = () => {
     <main>
         {!user && <Banner/>}
         <TopRatedMovies/>
-        <UpcomingMovie/>
-        <Service/>
-       
-        <TvSerise/>
 
     </main>
       <Footer/>
