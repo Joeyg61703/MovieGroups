@@ -17,7 +17,6 @@ app.use(cors({
     credentials: true
   }))
 
-app.use("/api/goals", require("./routes/goalRoutes.js"));
 app.use("/api/users", require("./routes/userRoutes.js"));
 app.use("/api/movie", require("./routes/movieRoutes.js"));
 

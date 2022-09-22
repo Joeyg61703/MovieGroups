@@ -23,6 +23,16 @@ const movieSchema = new mongoose.Schema({
         rating:{
             type: Number,
             default: 0
+        },
+        review:{
+            message:{
+                type: String,
+                default: null
+            },
+            rating: {
+                type: Number,
+                default: 0,
+            }
         }
     }],
 

@@ -3053,3 +3053,7 @@ label {
 .underline{
     text-decoration: underline;
 }
+
+.tr-movie-bg{
+    min-height: 80vh;
+}

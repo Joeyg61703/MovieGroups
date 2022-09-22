@@ -4,7 +4,6 @@ import Menu from "../UpMovieItemMenu";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {addMovie} from "../../features/movies/movieSlice";
-import {createGoal} from "../../features/goals/goalSlice";
 
 const TopRatedMovies = () => {
   const [movieType, setMovieType] = useState([]);
