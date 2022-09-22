@@ -9,7 +9,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Search from './pages/Search';
-
+import Groups from './pages/Groups';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 function App() {
@@ -45,10 +47,12 @@ function App() {
        <Route exact={true} path="/profile" element={<Profile/>}/>
 
        <Route exact={true} path="/search" element={<Search/>}/>
+
+       <Route exact={true} path="/groups" element={<Groups/>}/>
       
       </Routes>
   </Router>
-
+  <ToastContainer/>
      
       
         
