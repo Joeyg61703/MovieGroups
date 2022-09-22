@@ -8,6 +8,7 @@ import BlogDetails from './pages/BlogDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Search from './pages/Search';
 
 
 
@@ -42,6 +43,8 @@ function App() {
        <Route exact={true} path="/register" element={<Register/>}/>
 
        <Route exact={true} path="/profile" element={<Profile/>}/>
+
+       <Route exact={true} path="/search" element={<Search/>}/>
       
       </Routes>
   </Router>

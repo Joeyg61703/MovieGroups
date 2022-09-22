@@ -128,9 +128,9 @@ const TopRatedMovies = () => {
                     <Link to={"movie-details/" + id}>
                       <img
                         src={
-                          image !== undefined
+                          image !== null
                             ? `https://image.tmdb.org/t/p/w400${image}`
-                            : "https://via.placeholder.com/400"
+                            : "https://via.placeholder.com/400x600"
                         }
                         alt={title}
                       />
