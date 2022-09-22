@@ -14,7 +14,7 @@ const SearchMovies = () => {
   );
   const dispatch = useDispatch();
 
-  //returns only the first 4 trending
+
   const searchMovies = async (e) => {
     e.preventDefault();
     const request = await axios.get(

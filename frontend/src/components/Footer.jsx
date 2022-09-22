@@ -10,7 +10,7 @@ const Footer = () => {
               <div className="row align-items-center">
                 <div className="col-lg-3">
                   <div className="footer-logo">
-                    <Link to="/"><img src="img/logo/logo.png" alt="" /></Link>
+                    <Link to="/"><img src="/img/logo/logo.png" alt="" /></Link>
                   </div>
                 </div>
                 <div className="col-lg-9">
@@ -46,7 +46,7 @@ const Footer = () => {
               </div>
               <div className="col-lg-6 col-md-6">
                 <div className="payment-method-img text-center text-md-right">
-                  <a href="https://www.themoviedb.org/" target="_blank"><img src="img/images/TMDB-small.svg" alt="TMDB" /></a>
+                  <a href="https://www.themoviedb.org/" target="_blank"><img src="/img/images/TMDB-small.svg" alt="TMDB" /></a>
                 </div>
               </div>
             </div>

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 import axios from "axios";
-import $ from "jquery";
-import "magnific-popup";
+
 import { Link } from "react-router-dom";
 
 const MovieDetail = () => {
@@ -34,7 +33,7 @@ const MovieDetail = () => {
       <main>
         <section
           className="movie-details-area"
-          style={{ backgroundImage: 'url("../img/bg/movie_details_bg.jpg")' }}
+          style={{ backgroundImage: 'url("../../img/bg/movie_details_bg.jpg")' }}
         >
           <div className="container">
             <div className="row align-items-center position-relative">

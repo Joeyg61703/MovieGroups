@@ -1,4 +1,3 @@
-/* Extra large devices (large desktops, 1800px and up) */
 @media (max-width: 1800px) {
 .slider-img > img {
     margin-right: 0;

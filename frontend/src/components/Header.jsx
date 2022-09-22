@@ -119,6 +119,7 @@ if ($('.scroll-to-target').length) {
                         <li><a href="/blog-details">Blog Details</a></li>
                       </ul>
                     </li>
+                    <li><Link to="/groups">Groups</Link></li>
                     <li><Link to="/profile">My Profile</Link></li>
                   </ul>
                 </div>
@@ -135,7 +136,7 @@ if ($('.scroll-to-target').length) {
             <div className="mobile-menu">
               <div className="close-btn"><i className="fas fa-times" /></div>
               <nav className="menu-box">
-                <div className="nav-logo"><Link to="/"><img src="img/logo/logo.png" alt="" /></Link>
+                <div className="nav-logo"><Link to="/"><img src="/img/logo/logo.png" alt="" /></Link>
                 </div>
                 <div className="menu-outer">
                   {/*Here Menu Will Come Automatically Via Javascript / Same Menu as in Header*/}

@@ -10,12 +10,6 @@ import {Link} from "react-router-dom";
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState([]);
 
-  useEffect(()=>{
-
-		$('.popup-video').magnificPopup({
-			type: 'iframe'
-		});
-	},[])
 
  
   const getData = async () => {

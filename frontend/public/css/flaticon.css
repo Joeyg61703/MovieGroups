@@ -1,8 +1,3 @@
-	/*
-  	Flaticon icon font: Flaticon
-  	Creation date: 14/03/2021 08:05
-  	*/
-
 @font-face {
   font-family: "Flaticon";
   src: url("../fonts/Flaticon.eot");
@@ -31,3 +26,9 @@
 .flaticon-television:before { content: "\f100"; }
 .flaticon-globe:before { content: "\f101"; }
 .flaticon-video-camera:before { content: "\f102"; }
+
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 14/03/2021 08:05
+  	*/
+
