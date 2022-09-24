@@ -8,7 +8,8 @@ const Groups = () => {
   return (
     <>
     <Header/>
-    <main>
+    <main  className="top-rated-movie tr-movie-bg full"
+    style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}>
         <CreateGroup/>
         <UserGroups/>
     </main>

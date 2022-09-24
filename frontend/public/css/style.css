@@ -3021,3 +3021,6 @@ label {
     min-height: 80vh;
 }
 
+.bg-movie-red{
+    background-color: rgb(195, 19, 19);
+}
