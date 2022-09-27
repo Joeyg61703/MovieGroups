@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 
+
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -21,6 +23,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
+      console.log(message)
       toast.error(message)
     }
 

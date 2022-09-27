@@ -19,6 +19,7 @@ app.use(cors({
 
 app.use("/api/users", require("./routes/userRoutes.js"));
 app.use("/api/movie", require("./routes/movieRoutes.js"));
+app.use("/api/groups", require("./routes/groupRoutes.js"));
 
 //Frontend
 if(process.env.NODE_ENV === "production"){
