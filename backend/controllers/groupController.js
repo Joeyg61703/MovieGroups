@@ -18,6 +18,10 @@ const createGroup = asyncHandler(async (req, res) => {
             users: []
         });
     
+    }else {
+            res.status(400)
+            throw new Error("Group Name Taken");
+           
     }
 
     let groups = await Group.find({
@@ -57,15 +61,6 @@ const createGroup = asyncHandler(async (req, res) => {
 
 const getMyGroups = asyncHandler(async (req, res) => {
 
-    // const user = await User.findOne({_id: req.user.id});
-    // console.log(user.movies);
-    // let movies = [];
-    // for(let i = 0; i < user.movies.length; i++){
-    //     const movie = await Movie.findById(user.movies[i].movie);
-    //     movie.userRating = user.movies[i].rating;
-    //     movies.push(movie);
-    // }
-
     let groups = await Group.find({
         "users": {
             "$elemMatch": {id: req.user.id}
@@ -92,21 +87,40 @@ const leaveGroup = asyncHandler( async (req, res) => {
      throw new Error("User not found");
     }
  
-    //Checks if movie doesnt belong to logged in user
-    // if(movie.user.toString() !== req.user.id){
-    //      res.status(401);
-    //      throw new Error("User not authorized");
-    // }
-
 
     res.status(200).json({id: req.params.id})
 })
 
+const getGroupData = asyncHandler(async (req, res) => {
 
+    const groupName = req.params.name;
+
+    let group = await Group.findOne({
+        "name": groupName
+    })
+
+    let userArray = [];
+    for(let i = 0; i < group.users.length; i++){
+        const user = await User.findById(group.users[i].id)
+        userArray.push(user)
+    }
+
+    console.log(group, userArray)
+    
+    res.status(200).json({group, userArray});
+})
+
+const getAllGroups = asyncHandler(async (req, res) => {
+
+    let groups = await Group.find({})
+    res.status(200).json(groups);
+})
 
 
 module.exports = {
     createGroup,
     getMyGroups,
-    leaveGroup
+    leaveGroup,
+    getGroupData,
+    getAllGroups
 }

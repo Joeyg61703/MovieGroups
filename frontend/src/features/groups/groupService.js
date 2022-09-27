@@ -28,20 +28,45 @@ const getMyGroups = async (token) => {
     return response.data;
 }
 
-//leave group
-const leaveGroup = async (groupId, token) => {
+//get all groups
+const getAllGroups = async (token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.delete(API_URL + groupId, config);
+    const response = await axios.get(API_URL + "all", config);
 
     return response.data;
 }
 
 
+//leave group
+const leaveGroup = async (groupName, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + groupName, config);
+
+    return response.data;
+}
+
+//get group data
+const getGroupData = async (groupName, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(API_URL + groupName, config);
+
+    return response.data;
+}
 
 
 
@@ -49,6 +74,8 @@ const groupService = {
     createGroup,
     getMyGroups,
     leaveGroup,
+    getGroupData,
+    getAllGroups
 }
 
 export default groupService;

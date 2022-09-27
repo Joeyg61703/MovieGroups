@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { createGroup } from '../../features/groups/groupSlice'
+import { createGroup, reset } from '../../features/groups/groupSlice'
 // import { login, reset } from '../features/auth/authSlice'
 
 
@@ -18,22 +18,20 @@ const CreateGroup = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user} = useSelector(
     (state) => state.auth
   )
+  const {isLoading, isError, isSuccess, message } = useSelector((state) => state.groups)
 
-//   useEffect(() => {
-//     if (isError) {
-//       console.log(message)
-//       toast.error(message)
-//     }
+  useEffect(() => {
+    if (isError) {
+      console.log(message)
+      toast.error(message)
+    }
 
-//     if (isSuccess || user) {
-//       navigate('/')
-//     }
 
-//     dispatch(reset())
-//   }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, reset, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -51,6 +49,7 @@ const CreateGroup = () => {
     }
 
     dispatch(createGroup(userData))
+
   }
   return (
 
