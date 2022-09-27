@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 import axios from "axios";
-
+import {addMovie} from "../../features/movies/movieSlice";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const MovieDetail = () => {
   const [movieData, setMovieData] = useState([]);
+
+  const {user} = useSelector(
+    (state) => state.auth
+  )
+  const dispatch = useDispatch();
 
   const getData = async () => {
     const url = window.location.href.split("/");
@@ -54,10 +60,7 @@ const MovieDetail = () => {
                   <h2>{movieData.title}</h2>
                   <div className="banner-meta">
                     <ul>
-                      <li className="quality">
-                        <span>Pg 18</span>
-                        <span>hd</span>
-                      </li>
+                      
                       <li className="category">
                         {movieData.genres?.map((genre) => (
                           <Link key={genre.id} to={"../" + genre.name}>
@@ -80,15 +83,26 @@ const MovieDetail = () => {
                   <p>{movieData.overview}</p>
                   <div className="movie-details-prime d-flex">
                     <ul>
-                      <li className="watch">
+                      {/* <li className="watch">
                         <a className="btn">
                           <i className="fas fa-star" /> Rate Movie
                         </a>
-                      </li>
+                      </li> */}
                       <li className="watch">
-                        <a className="btn">
-                          <i className="fas fa-plus" /> Add to My Movies
-                        </a>
+                        {user ? (
+                          <button onClick={()=>{
+                            let id = movieData.id
+                            let image = movieData.poster_path
+                            let title = movieData.title 
+                            dispatch(addMovie({id, image, title}))
+                          }}
+                          type="submit" className="btn d-flex justify-content-center align-items-center">
+                            <i className="fas fa-plus" /> Add to My Movies
+                          </button>
+                        ) :   
+                        (<Link to="/login" className="btn d-flex justify-content-center align-items-center">
+                            <i className="fas fa-plus" /> Add to My Movies
+                          </Link>)}
                       </li>
                     </ul>
                   </div>
