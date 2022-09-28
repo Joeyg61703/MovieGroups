@@ -105,7 +105,7 @@ if ($('.scroll-to-target').length) {
                 <div className="navbar-wrap main-menu d-none d-lg-flex">
                   <ul className="navigation">
                     <li className=""><Link to="/"> Home</Link></li>
-                    <li className="menu-item-has-children"><a href="/movie">Movie</a>
+                    {/* <li className="menu-item-has-children"><a href="/movie">Movie</a>
                       <ul className="submenu">
                         <li><a href="/movie/trending">Trending</a></li>
                         <li><a href="/movie/new">New</a></li>
@@ -118,7 +118,7 @@ if ($('.scroll-to-target').length) {
                         <li><a href="/reviews">Our Blog</a></li>
                         <li><a href="/blog-details">Blog Details</a></li>
                       </ul>
-                    </li>
+                    </li> */}
                     <li><Link to="/groups">Groups</Link></li>
                     <li><Link to="/profile">My Profile</Link></li>
                   </ul>
@@ -140,11 +140,11 @@ if ($('.scroll-to-target').length) {
                 </div>
                 <div className="menu-outer">
                   {/*Here Menu Will Come Automatically Via Javascript / Same Menu as in Header*/}
+                  <li className=" ml-4 white header-search"><Link to="/search" data-toggle="modal" data-target="#search-modal"><i className="fas fa-search"/></Link></li>
                 </div>
-                <div className="social-links">
-                  <ul className="clearfix">
-                    <li><a href="/#"><span className="fab fa-twitter" /></a></li>                 
-                    <li><a href="/#"><span className="fab fa-github" /></a></li>                 
+                <div className="row justify-content-center mt-4">
+                  <ul>                 
+                   {user ? <li className="header-btn"><button onClick={onLogout} className="btn">Log Out</button></li> : <li className="header-btn"><Link to="/login" className="btn">Sign In</Link></li>}
                   </ul>
                 </div>
               </nav>
@@ -159,6 +159,7 @@ if ($('.scroll-to-target').length) {
                     <input type="text" placeholder="Search here..." />
                     <button><i className="fas fa-search" /></button>
                   </form>
+                  
                 </div>
               </div>
             </div>

@@ -53,7 +53,7 @@ const Login = () => {
   }
   return (
     <section
-    className="top-rated-movie tr-movie-bg full"
+    className="top-rated-movie tr-movie-bg full-height"
     style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}>
      <div className="container">
         <div className="row justify-content-center">

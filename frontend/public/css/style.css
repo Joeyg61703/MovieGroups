@@ -3009,9 +3009,6 @@ label {
     color: rgb(195, 19, 19);
 }
 
-.full{
-    min-height: 100vh;
-}
 
 .underline{
     text-decoration: underline;
@@ -3023,4 +3020,8 @@ label {
 
 .bg-movie-red{
     background-color: rgb(195, 19, 19);
+}
+
+.full-height{
+    min-height: 100vh;
 }

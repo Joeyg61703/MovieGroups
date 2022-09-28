@@ -17,16 +17,15 @@ const Footer = () => {
                   <div className="footer-menu">
                     <nav>
                       <ul className="navigation">
-                        <li><a href="/index">Home</a></li>
-                        <li><a href="/index">Movie</a></li>
-                        <li><a href="/index">tv show</a></li>
-                        <li><a href="/index">pages</a></li>
-                        <li><a href="/pricing">Pricing</a></li>
+                      <li className=""><Link to="/"> Home</Link></li>
+                    
+                    <li><Link to="/groups">Groups</Link></li>
+                    <li><Link to="/profile">My Profile</Link></li>
                       </ul>
                       <div className="footer-search">
                         <form action="/#">
                           <input type="text" placeholder="Find Favorite Movie" />
-                          <button><i className="fas fa-search" /></button>
+                          <Link to="/search"> <button><i className="fas fa-search" /></button> </Link>
                         </form>
                       </div>
                     </nav>

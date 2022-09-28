@@ -58,7 +58,7 @@ const Register = () => {
 
   return (
     <section
-      className="top-rated-movie full"
+      className="top-rated-movie full-height"
       style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
     >
       <div className="container">
