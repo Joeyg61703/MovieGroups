@@ -119,8 +119,8 @@ if ($('.scroll-to-target').length) {
                         <li><a href="/blog-details">Blog Details</a></li>
                       </ul>
                     </li> */}
-                    <li><Link to="/groups">Groups</Link></li>
-                    <li><Link to="/profile">My Profile</Link></li>
+                    <li><Link to={user ? "/groups" : "/login"}>Groups</Link></li>
+                    <li><Link to={user ? "/profile" : "/login"}>My Profile</Link></li>
                   </ul>
                 </div>
                 <div className="header-action d-none d-md-block">
