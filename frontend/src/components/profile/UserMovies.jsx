@@ -113,7 +113,7 @@ const UserMovies = () => {
                       </li>
                         <li>
                           <span className="rating">
-                            <i className="fas fa-trash" onClick={()=>{deleteMyMovie(elem._id)}} />
+                            <i className="fas fa-trash fa-2x" onClick={()=>{deleteMyMovie(elem._id)}} />
                       
                           </span>
                         </li>

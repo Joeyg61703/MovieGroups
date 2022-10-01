@@ -11,13 +11,7 @@ const Groups = () => {
   const {user} = useSelector(
     (state) => state.auth
   )
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    if(!user){
-      navigate("../login")
-    }
-  }, []);
+
   return (
     <>
     <Header/>

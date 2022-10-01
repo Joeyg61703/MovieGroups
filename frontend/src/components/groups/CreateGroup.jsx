@@ -49,6 +49,7 @@ const CreateGroup = () => {
     }
 
     dispatch(createGroup(userData))
+    location.reload()
 
   }
   return (
