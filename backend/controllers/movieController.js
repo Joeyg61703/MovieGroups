@@ -61,15 +61,6 @@ const addMovie = asyncHandler(async (req, res) => {
 
 const getMyMovies = asyncHandler(async (req, res) => {
 
-    // const user = await User.findOne({_id: req.user.id});
-    // console.log(user.movies);
-    // let movies = [];
-    // for(let i = 0; i < user.movies.length; i++){
-    //     const movie = await Movie.findById(user.movies[i].movie);
-    //     movie.userRating = user.movies[i].rating;
-    //     movies.push(movie);
-    // }
-
     let movies = await Movie.find({
         "users": {
             "$elemMatch": {user: req.user.id}

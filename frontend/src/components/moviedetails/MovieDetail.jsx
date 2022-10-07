@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const MovieDetail = () => {
+  
   const [movieData, setMovieData] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
-  const [movieId, setMovieId] = useState("");
+  const [movieId, setMovieId] = useState(window.location.href.split("/")[window.location.href.split("/").length - 1]);
+  const [currentUrl, setCurrentUrl] = useState(""); 
   const {user} = useSelector(
     (state) => state.auth
   )
@@ -17,19 +19,18 @@ const MovieDetail = () => {
 
   const getData = async () => {
     const url = window.location.href.split("/");
-    const movieId = url[url.length - 1];
+    const currentMovieId = url[url.length - 1];
     const request = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}`
     );
-    setMovieId(movieId)
+    setMovieId(currentMovieId)
+    setCurrentUrl(window.location.href);
     const movies = await request.data;
     
     return movies;
   };
 
   const getRecommended = async () => {
-    const url = window.location.href.split("/");
-    const movieId = url[url.length - 1];
     const request = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_API_KEY}`
     );
@@ -38,9 +39,10 @@ const MovieDetail = () => {
     return movies;
   };
 
-
   useEffect(() => {
+   
     const awaitMovies = async () => {
+  
       const movie = await getData();
       const recommendations = await getRecommended();
       console.log(movie);
@@ -48,6 +50,7 @@ const MovieDetail = () => {
       setRecommendedMovies(recommendations);
     };
     awaitMovies();
+    console.log(movieId === location.href.split("/")[location.href.split("/").length - 1])
   }, [movieId]);
 
   return (
@@ -177,7 +180,7 @@ const MovieDetail = () => {
                   <div className="movie-content">
                     <div className="top">
                       <h5 className="title">
-                      <Link to={"movie-details/" + id}>{title}</Link>
+                      <Link onClick={()=>{setMovieId(id)}} to={"../../movie-details/" + id}>{title}</Link>
                       </h5>
                       <span className="date">{date.split("-")[0]}</span>
                     </div>
