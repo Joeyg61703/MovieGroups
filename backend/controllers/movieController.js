@@ -19,7 +19,6 @@ const addMovie = asyncHandler(async (req, res) => {
             users: [],
             userRating: 0 
         });
-    
     }
 
     let movies = await Movie.find({
@@ -67,6 +66,19 @@ const getMyMovies = asyncHandler(async (req, res) => {
         }
     })
     res.status(200).json(movies);
+})
+
+const getUserMovies = asyncHandler(async (req, res) => {
+
+    console.log("Test")
+    const user = await User.findOne({name: req.params.name});
+    console.log("User: ", user)
+    let movies = await Movie.find({
+        "users": {
+            "$elemMatch": {user: user._id}
+        }
+    })
+    res.status(200).json({movies: movies, user: user});
 })
 
 const deleteMovie = asyncHandler( async (req, res) => {
@@ -148,5 +160,6 @@ module.exports = {
     addMovie,
     getMyMovies,
     deleteMovie,
-    rateMovie
+    rateMovie,
+    getUserMovies
 }

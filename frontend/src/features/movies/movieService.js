@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://moviegroups.herokuapp.com/api/movie/";
+const API_URL = "http://localhost:5000/api/movie/";
 
 //Add movie to array within user document
 const addMovie = async (movieData, token) => {
@@ -24,6 +24,19 @@ const getMyMovies = async (token) => {
     }
 
     const response = await axios.get(API_URL, config);
+
+    return response.data;
+}
+
+//get other users Movies
+const getUserMovies = async (userName, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(API_URL + "user/" + userName, config);
 
     return response.data;
 }
@@ -59,7 +72,8 @@ const movieService = {
     addMovie,
     getMyMovies,
     deleteMovie,
-    rateMovie
+    rateMovie,
+    getUserMovies
 }
 
 export default movieService;
