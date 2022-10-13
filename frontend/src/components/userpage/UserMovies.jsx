@@ -2,41 +2,43 @@ import React, {useState, useEffect} from 'react'
 import TopRatedMovies from '../homeone/TopRatedMovies'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from "axios";
-import { getMyMovies, deleteMovie, rateMovie } from '../../features/movies/movieSlice';
+import { getUserMovies } from '../../features/movies/movieSlice';
 import {Link, useNavigate} from "react-router-dom"
 import ReactStars from 'react-stars'
 
 const UserMovies = () => {
-    const { user, isLoading, isError, isSuccess, message } = useSelector(
+    const {user} = useSelector(
         (state) => state.auth
       )
 
-      
+    
     const navigate = useNavigate();  
     const dispatch = useDispatch();
 
-    const [myMovies, setMyMovies] = useState([]);
-      
-      
-    const deleteMyMovie = async (id) => {
-      const deletedMovie = await dispatch(deleteMovie(id));
-      console.log(deletedMovie);
-      location.reload();
-    }
+    const [userMovies, setUserMovies] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+    let viewedUser; 
 
-    const rateMyMovie = async (event, id) => {
-      const movie = await dispatch(rateMovie({rating: event, id: id}));
-      
-    }
+    const awaitMovies = async () => {
+      const urlArr = location.href.split("/");
+      const userName = urlArr[urlArr.length-1];
+      console.log(userName)
+      if(user && userName === user.name) navigate("/profile");
+
+      const data = await dispatch(getUserMovies(userName))
+      console.log(data.payload);
+      const movies = data.payload.movies;
+      const viewedUser = data.payload.user;
+     console.log("Data:", data.payload.user)
+      setUserMovies(movies);
+      setCurrentUser(viewedUser)
+    };
 
     useEffect(() => {
-
-      const awaitMovies = async () => {
-        const movies = await dispatch(getMyMovies());
-        setMyMovies(movies.payload);    
-      };
-      awaitMovies();
+      awaitMovies();   
+      console.log(currentUser)
     }, []);
+    console.log(currentUser)
     
   return (
     
@@ -49,7 +51,7 @@ const UserMovies = () => {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="section-title text-center mb-50">
-              <h2> {user && user.name} Movies</h2>
+              <h2> {currentUser && currentUser.name} Movies</h2>
             </div>
           </div>
         </div>
@@ -61,8 +63,7 @@ const UserMovies = () => {
           </div>
         </div>
       <div className="row tr-movie-active">
-          {myMovies && myMovies.map((elem) => {
-            
+          {userMovies && userMovies.map((elem) => {
             const {
               movieId: id,
               image,
@@ -99,14 +100,9 @@ const UserMovies = () => {
                     <div className="bottom">
                       <ul>
                       <li className="watch">
-                        <ReactStars value={users.filter((obj) => obj.user === user._id)[0].rating || 0} count={5} onChange={(event)=>{rateMyMovie(event, elem._id)}} color2={"#c31313"} size={24}/>
+                        {currentUser && <ReactStars value={users.filter((obj) => obj.user === currentUser._id)[0].rating || 0} count={5} edit={false}  color2={"#c31313"} size={24}/>}
                       </li>
-                        <li>
-                          <span className="rating">
-                            <i className="fas fa-trash fa-2x" onClick={()=>{deleteMyMovie(elem._id)}} />
-                      
-                          </span>
-                        </li>
+      
                       </ul>
                     </div>
                   </div>

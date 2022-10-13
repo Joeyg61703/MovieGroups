@@ -3,8 +3,6 @@ import Homeone from './pages/Homeone';
 import MovieDetail from './components/moviedetails/MovieDetail';
 import { useEffect } from "react"
 import $ from "jquery";
-import Blogs from './pages/Blogs';
-import BlogDetails from './pages/BlogDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -14,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import GroupDetails from './pages/GroupDetails';
 import Genre from './pages/Genre';
+import UserPage from './pages/UserPage';
 
 
 function App() {
@@ -38,10 +37,6 @@ function App() {
       
        <Route exact={true} path="/movie-details/:id" element={<MovieDetail/>}/>
                                  
-       <Route exact={true} path="/blog" element={<Blogs/>}/>
-  
-       <Route exact={true} path="/blog-details" element={<BlogDetails/>}/>
-
        <Route exact={true} path="/login" element={<Login/>}/>
 
        <Route exact={true} path="/register" element={<Register/>}/>
@@ -53,6 +48,8 @@ function App() {
        <Route exact={true} path="/groups" element={<Groups/>}/>
 
        <Route exact={true} path="/groups/:name" element={<GroupDetails/>}/>
+
+       <Route path="/user/:name" element={<UserPage/>}/>
 
        <Route path="/genre/:genre" element={<Genre/>}/>
       

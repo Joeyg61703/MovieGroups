@@ -11,19 +11,24 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Please add all fields");
     }
 
-    const userExists = await User.findOne({email});
+    const emailTaken = await User.findOne({email});
+    const nameTaken = await User.findOne({name});
 
-    if(userExists){
+    if(emailTaken){
         res.status(400);
-        throw new Error("User already Exists");
+        throw new Error("Email already taken");
+    }
+    if(nameTaken){
+        res.status(400);
+        throw new Error("Name already taken");
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await User.create({
-        name,
-        email,
+        name: name.toLowerCase(),
+        email: email.toLowerCase(),
         password: hashedPassword
     })
 
