@@ -25,7 +25,7 @@ const CreateGroup = () => {
 
   useEffect(() => {
     if (isError) {
-      console.log(message)
+      //console.log(message)
       toast.error(message)
     }
 
@@ -40,7 +40,7 @@ const CreateGroup = () => {
     }))
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     const userData = {
@@ -48,8 +48,9 @@ const CreateGroup = () => {
       password,
     }
 
-    dispatch(createGroup(userData))
-    location.reload()
+    const data = await dispatch(createGroup(userData))
+    if(!data.error)
+      location.reload()
 
   }
   return (

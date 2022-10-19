@@ -22,23 +22,23 @@ const UserMovies = () => {
     const awaitMovies = async () => {
       const urlArr = location.href.split("/");
       const userName = urlArr[urlArr.length-1];
-      console.log(userName)
+      //console.log(userName)
       if(user && userName === user.name) navigate("/profile");
 
       const data = await dispatch(getUserMovies(userName))
-      console.log(data.payload);
+      //console.log(data.payload);
       const movies = data.payload.movies;
       const viewedUser = data.payload.user;
-     console.log("Data:", data.payload.user)
+     //console.log("Data:", data.payload.user)
       setUserMovies(movies);
       setCurrentUser(viewedUser)
     };
 
     useEffect(() => {
       awaitMovies();   
-      console.log(currentUser)
+      //console.log(currentUser)
     }, []);
-    console.log(currentUser)
+    //console.log(currentUser)
     
   return (
     

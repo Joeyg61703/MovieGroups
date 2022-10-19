@@ -6,10 +6,15 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    creator: {
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true 
+    },
+    privacyType: {
+        type: String,
+        required: true,
+        default: ""
     },
     users: [{
         id: {
