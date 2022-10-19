@@ -15,8 +15,8 @@ const AllGroups = () => {
     const awaitGroups = async () => {
       const groups = await dispatch(getAllGroups());
 
-      console.log("Groups:", groups.payload);
-      console.log(user._id);
+      //console.log("Groups:", groups.payload);
+      //console.log(user._id);
       setAllGroups(groups.payload);
     };
     awaitGroups();

@@ -20,7 +20,7 @@ const UserMovies = () => {
       
     const deleteMyMovie = async (id) => {
       const deletedMovie = await dispatch(deleteMovie(id));
-      console.log(deletedMovie);
+     // console.log(deletedMovie);
       location.reload();
     }
 

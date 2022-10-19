@@ -35,7 +35,7 @@ const MovieDetail = () => {
       `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_API_KEY}`
     );
     const movies = await request.data.results.splice(0,4);
-    console.log("Recommended: ", movies)
+    //console.log("Recommended: ", movies)
     return movies;
   };
 
@@ -45,12 +45,12 @@ const MovieDetail = () => {
   
       const movie = await getData();
       const recommendations = await getRecommended();
-      console.log(movie);
+      //console.log(movie);
       setMovieData(movie);
       setRecommendedMovies(recommendations);
     };
     awaitMovies();
-    console.log(movieId === location.href.split("/")[location.href.split("/").length - 1])
+    //console.log(movieId === location.href.split("/")[location.href.split("/").length - 1])
   }, [movieId]);
 
   return (
@@ -67,9 +67,9 @@ const MovieDetail = () => {
                 <div className="movie-details-img">
                   <img
                     src={
-                      movieData.poster_path !== undefined
+                      movieData.poster_path !== null
                         ? `https://image.tmdb.org/t/p/w300${movieData.poster_path}`
-                        : "https://via.placeholder.com/400"
+                        : "https://via.placeholder.com/300x500"
                     }
                     alt={movieData.title}
                   />

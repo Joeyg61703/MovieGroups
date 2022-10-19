@@ -4,19 +4,23 @@ const Group = require("../models/groupModel.js");
 
 const createGroup = asyncHandler(async (req, res) => {
     
-    console.log("Test")
-
     const groupName = req.body.groupName;
-  
+    const groupPassword = req.body.password;
+    let groupType = "public"; 
+
+    if(groupPassword !== "")
+        groupType = "private";
 
     const groupExists = await Group.findOne({name: groupName});
 
     if(!groupExists){
         const group = await Group.create({
             name: groupName,
-            creator: req.user.id,
+            owner: req.user.id,
+            privacyType: groupType,
             users: []
         });
+        console.log(group)
     
     }else {
             res.status(400)
@@ -40,10 +44,8 @@ const createGroup = asyncHandler(async (req, res) => {
             }}
         });
     }
- 
    
     console.log("Groups:", groups)
-    // console.log(movieExists);
 
     if(!req.user){
         res.status(401)
@@ -51,10 +53,7 @@ const createGroup = asyncHandler(async (req, res) => {
        }
        
        let user = await User.findOne({_id: req.user.id});
-    
-    
-        // console.log(movieData)
-        // console.log(user.movies)
+   
         res.status(200).json(groupData)
     
 })
@@ -76,9 +75,9 @@ const leaveGroup = asyncHandler( async (req, res) => {
             "$pull": {"users": {"id": req.user.id}}
         })
      
-    if(!movie){
+    if(!group){
         res.status(400);
-        throw new Error("Movie not found");
+        throw new Error("Group not found");
     }
 
    

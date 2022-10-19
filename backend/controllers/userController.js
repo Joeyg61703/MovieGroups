@@ -11,6 +11,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Please add all fields");
     }
 
+    
     const emailTaken = await User.findOne({email});
     const nameTaken = await User.findOne({name});
 
@@ -51,8 +52,9 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
 
+    email = email.toLowerCase();
     const user = await User.findOne({email});
-
+    
     if(user && (await bcrypt.compare(password, user.password))){
         res.json({
             _id: user.id,

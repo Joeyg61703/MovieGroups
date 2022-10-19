@@ -19,7 +19,7 @@ const GroupUsers = () => {
     const data = await dispatch(getGroupData(movieName));
     const {group, userArray} = data.payload;
     setUsers(userArray);
-    console.log(movieName, group, userArray);
+    //console.log(movieName, group, userArray);
   }
 
   useEffect(()=>{
