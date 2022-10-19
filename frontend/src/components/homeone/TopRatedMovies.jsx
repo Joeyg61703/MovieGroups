@@ -45,14 +45,14 @@ const TopRatedMovies = () => {
       const trending = await getTrending();
       const topRated = await getTopRated();
       const nowPlaying = await getNowPlaying();
-      console.log(trending, topRated, nowPlaying);
+      //console.log(trending, topRated, nowPlaying);
       setTrendingMovies(trending);
       setTopRatedMovies(topRated);
       setNowPlayingMovies(nowPlaying);
       setMovieType(trending);
     };
     awaitMovies();
-    console.log("test", trendingMovies);
+    //console.log("test", trendingMovies);
   }, []);
 
   return (
