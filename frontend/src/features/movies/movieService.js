@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://moviegroups.herokuapp.com/api/movie/";
+const API_URL = "/api/movie/";
 
 //Add movie to array within user document
 const addMovie = async (movieData, token) => {

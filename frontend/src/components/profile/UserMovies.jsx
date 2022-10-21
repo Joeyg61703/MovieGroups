@@ -61,7 +61,7 @@ const UserMovies = () => {
           </div>
         </div>
       <div className="row tr-movie-active">
-          {myMovies && myMovies.map((elem) => {
+          {myMovies && myMovies?.map((elem) => {
             
             const {
               movieId: id,
