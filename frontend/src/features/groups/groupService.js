@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "/api/groups/";
 
-//Add movie to array within user document
+//create group with current user as owner
 const createGroup = async (groupData, token) => {
     const config = {
         headers: {
@@ -11,6 +11,19 @@ const createGroup = async (groupData, token) => {
     }
 
     const response = await axios.post(API_URL, groupData, config);
+
+    return response.data;
+}
+
+//join group as member
+const joinGroup = async (groupData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.post(API_URL + "join/", groupData, config);
 
     return response.data;
 }
@@ -75,7 +88,8 @@ const groupService = {
     getMyGroups,
     leaveGroup,
     getGroupData,
-    getAllGroups
+    getAllGroups,
+    joinGroup
 }
 
 export default groupService;

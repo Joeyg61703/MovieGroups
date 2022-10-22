@@ -9,7 +9,7 @@ const initialState = {
     message: "",
 }
 
-//Add Movie
+//create nonexisting Group
 export const createGroup = createAsyncThunk("/groups/create", async (groupData, thunkAPI) =>{
     try{
         const token = thunkAPI.getState().auth.user.token;
@@ -23,6 +23,22 @@ export const createGroup = createAsyncThunk("/groups/create", async (groupData, 
         error.toString()
       return thunkAPI.rejectWithValue(message)
     }
+})
+
+//join exisiting group
+export const joinGroup = createAsyncThunk("/groups/join", async (groupData, thunkAPI) =>{
+  try{
+      const token = thunkAPI.getState().auth.user.token;
+      return await groupService.joinGroup(groupData, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
 })
 
 export const leaveGroup = createAsyncThunk("groups/leave", async (id, thunkAPI) =>{
@@ -109,7 +125,21 @@ export const groupSlice = createSlice({
         state.isError = true
         state.isSuccess = false
         state.message = action.payload
-      })  
+      }) 
+      .addCase(joinGroup.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(joinGroup.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.groups.push(action.payload)
+      })
+      .addCase(joinGroup.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+        state.message = action.payload
+      }) 
       .addCase(getMyGroups.pending, (state) => {
         state.isLoading = true
       })

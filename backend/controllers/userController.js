@@ -59,6 +59,9 @@ const loginUser = asyncHandler(async (req, res) => {
     email = email.toLowerCase();
     const user = await User.findOne({email});
     
+
+    //Handles checking the equality of the hashed password in the database
+    //to the one entered in the login form
     if(user && (await bcrypt.compare(password, user.password))){
         res.json({
             _id: user.id,

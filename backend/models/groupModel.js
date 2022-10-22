@@ -6,6 +6,11 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        default: null,
+    },
+
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
