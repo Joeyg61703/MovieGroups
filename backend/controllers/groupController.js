@@ -14,14 +14,13 @@ const createGroup = asyncHandler(async (req, res) => {
 
     if(!groupName){
         res.status(400);
-        throw new Error("Please Enter Group Name")
+        throw new Error("CREATE: Please Enter Group Name")
     }
     
     if(groupPassword)
         groupType = "private";
     
 
-    console.log("Before Password Hash")
     const groupExists = await Group.findOne({name: groupName});
     const salt = await bcrypt.genSalt(10);
     //This will be null if there is no entered password
@@ -30,55 +29,30 @@ const createGroup = asyncHandler(async (req, res) => {
 
     if(groupExists){
         res.status(400)
-        throw new Error("Group Name Taken");
+        throw new Error("CREATE: Group Name Taken");
     }
 
-    if(!groupExists){
-        const group = await Group.create({
+    await Group.create({
             name: groupName,
             password: hashedPassword,
             owner: req.user.id,
             privacyType: groupType,
             users: []
-        });
-        // console.log(group)
-    
-    }else {
-            res.status(400)
-            throw new Error("Group Name Taken");
-           
-    }
-
-    let groups = await Group.find({
-        "users": {
-            "$elemMatch": {id: req.user.id}
-        }
-    })
-
-
-    let alreadyAdded = groups.some((group) => group.name === groupName)
-    let groupData = null;
-
-    console.log(alreadyAdded);
-
-    if(!alreadyAdded){
-         groupData = await Group.findOneAndUpdate({name: groupName}, {
+    });
+  
+    let groupData = await Group.findOneAndUpdate({name: groupName}, {
             "$push": {"users": {
                 "id": req.user.id
             }}
-        });
-    }
-   
-    // console.log("Groups:", groups)
-
+    });
+    
     if(!req.user){
         res.status(401)
         throw new Error("User not found");
        }
-       
-       let user = await User.findOne({_id: req.user.id});
-   
-        res.status(200).json(groupData)
+
+
+    res.status(200).json(groupData)
 
         console.log("____CREATE GROUP END_____")
     
@@ -93,87 +67,67 @@ const joinGroup = asyncHandler(async (req, res) => {
 
     if(!enteredName){
         res.status(400)
-        throw new Error("Please Enter Group Name");
+        throw new Error("JOIN: Please Enter Group Name");
     }
 
     const group = await Group.findOne({name: enteredName});
-
-    console.log(!!group)
-
+    let groupData = null;
+    
     if(!group){
         res.status(400)
-        throw new Error("Group Does Not Exist");
-    
-    }else {
+        throw new Error("JOIN: Group Does Not Exist");
+    }
+    else {
+        //checks for groups that the user is in
+        let groups = await Group.find({
+            "users": {
+                "$elemMatch": {id: req.user.id}
+            }
+        })
+        //if the user is already in the group return error
+        let alreadyAdded = groups.some((group) => group.name === enteredName);
+        if(alreadyAdded){
+            res.status(400);
+            throw new Error("JOIN: Already in Group");
+        }
         //If group exists check for privacy type and then if password matches the groups password
            if(group.privacyType == "public"){
-            let groups = await Group.find({
-                "users": {
-                    "$elemMatch": {id: req.user.id}
-                }
-            })
-            let alreadyJoined = groups.some((group) => group.name === groupName)
-            
-            //if the user is not already in the group
-            if(!alreadyJoined){
-                groupData = await Group.findOneAndUpdate({name: groupName}, {
+    
+                //Join Group
+                groupData = await Group.findOneAndUpdate({name: enteredName}, {
                     "$push": {"users": {
                         "id": req.user.id
                     }}
                 });
-            }else{
-                res.status(400)
-                throw new Error("Already in Group");
-            }
+            
 
            }else{
                 if(!enteredPassword){
                     res.status(400)
-                    throw new Error("Group Requires a Password");
+                    throw new Error("JOIN: Group Requires a Password");
                 }else if(group && (await bcrypt.compare(enteredPassword, group.password))){
                         //Handles checking the equality of the hashed password in the database
                         //to the one entered in the join form
-                       
-                            res.json({
-                                _id: user.id,
-                                name: user.name,
-                                email: user.email,
-                                movies: user.movies,
-                                token: generateToken(user._id)
-                            })
+                       //Join Group
+                    groupData = await Group.findOneAndUpdate({name: enteredName}, {
+                    "$push": {"users": {
+                        "id": req.user.id
+                        }}
+                    });
                      
                 }else{
                     res.status(400)
-                    throw new Error("Incorrect Password");
+                    throw new Error("JOIN: Incorrect Password");
                 }
            }
     }
-
-    let groups = await Group.find({
-        "users": {
-            "$elemMatch": {id: req.user.id}
-        }
-    })
-
-    let alreadyAdded = groups.some((group) => group.name === groupName)
-    let groupData = null;
-
-    if(!alreadyAdded){
-         groupData = await Group.findOneAndUpdate({name: groupName}, {
-            "$push": {"users": {
-                "id": req.user.id
-            }}
-        });
-    }
-   
-    console.log("Groups:", groups)
 
     if(!req.user){
         res.status(401)
         throw new Error("User not found");
        }
        
-       let user = await User.findOne({_id: req.user.id});
+      ;
    
         res.status(200).json(groupData)
     

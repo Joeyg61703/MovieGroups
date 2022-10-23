@@ -25,8 +25,8 @@ const JoinGroupForm = () => {
 
   useEffect(() => {
     if (isError) {
-      //console.log(message)
-      toast.error(message)
+      if(message.includes("JOIN"))
+        toast.error(message)
     }
 
     dispatch(reset())
@@ -48,8 +48,8 @@ const JoinGroupForm = () => {
     }
 
     const data = await dispatch(joinGroup(userData))
-    if(!data.error)
-      location.reload()
+    // if(!data.error)
+    //   location.reload()
 
    }
   return (

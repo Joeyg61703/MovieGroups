@@ -25,8 +25,8 @@ const CreateGroupForm = () => {
 
   useEffect(() => {
     if (isError) {
-      //console.log(message)
-      toast.error(message)
+      if(message.includes("CREATE"))
+        toast.error(message)
     }
 
 

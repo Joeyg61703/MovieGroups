@@ -27,25 +27,27 @@ const GroupUsers = () => {
     const awaitData = async () => {
       await getData();
     }
+    console.log(user)
     awaitData();
   }, []);
 
   return (
     <div>
       <div className="">
-          {users.map((user) => {
+          {users.map((currentUser) => {
             const {
               name,
-              id
-            } = user;
+              _id: id
+            } = currentUser;
+            console.log(currentUser)
 
             return (
               <div
-                className="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two animate__animated animate__fadeInUp border border-dark" data-wow-delay=".4s" data-wow-duration="1.8s"
+                className="col-xl-3 p-3 col-lg-4 col-sm-6 d-flex justify-content-between align-items-center grid-item grid-sizer cat-two animate__animated animate__fadeInUp border border-dark" data-wow-delay=".4s" data-wow-duration="1.8s"
                 key={id}
               >
                 <h1>{name}</h1>
-                {user.id === id ? "You" : ""}
+                {user._id == id ? "You" : <a href={`../../user/${name}`} className="btn">View Profile</a>}
               </div>
             );
           })}

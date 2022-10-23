@@ -5,9 +5,19 @@ import GroupUsers from './GroupUsers';
 const GroupBody = () => {
 
     const [currentPage, setCurrentPage] = useState("users");
-    let textColor = "text-success";
 
-
+    function handleClick(state){
+      setCurrentPage(state);
+      const userButton = document.querySelector(".users");
+      const movieButton = document.querySelector(".movies");
+      if(state == "users"){
+        userButton.classList.add("sub-nav-active");
+        movieButton.classList.remove("sub-nav-active");
+      }else{
+        userButton.classList.remove("sub-nav-active");
+        movieButton.classList.add("sub-nav-active");
+      }
+    }
   
     
   return (
@@ -19,8 +29,8 @@ const GroupBody = () => {
     >
       <div className="container">
         <div className="row justify-content-center">
-            <li className={"mr-5 bg-transparent" + textColor} onClick={()=>{setCurrentPage("users")}}>Users</li>
-            <li className={"bg-transparent" + textColor} onClick={()=>{setCurrentPage("movies")}}>Movies</li>
+            <li className={"mr-5 bg-transparent sub-nav users sub-nav-active"} onClick={()=>{handleClick("users")}}>Users</li>
+            <li className={"bg-transparent sub-nav movies"} onClick={()=>{handleClick("movies")}}>Movies</li>
         </div>
         {currentPage === "users" ? <GroupUsers/> : <GroupMovies/>}
         </div>

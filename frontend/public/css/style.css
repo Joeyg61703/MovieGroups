@@ -3026,3 +3026,14 @@ label {
     min-height: 100vh;
 }
 
+.sub-nav:hover{
+    color: rgb(195, 19, 19);
+    transform: scale(150%);
+    cursor: pointer;
+}
+
+.sub-nav-active{
+    color: rgb(195, 19, 19);
+    transform: scale(150%);
+    cursor: pointer;
+}
