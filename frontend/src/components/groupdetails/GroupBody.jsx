@@ -4,7 +4,7 @@ import GroupUsers from './GroupUsers';
 import { useDispatch, useSelector } from 'react-redux';
 import { leaveGroup } from '../../features/groups/groupSlice';
 import { useNavigate } from 'react-router-dom';
-
+import Popup from "../Popup";
 const GroupBody = () => {
   const {user} = useSelector(
     (state) => state.auth
@@ -25,13 +25,21 @@ const GroupBody = () => {
         movieButton.classList.add("sub-nav-active");
       }
     }
+
+    function showMenu(){
+      const popup = document.getElementById("popup");
+        popup.classList.remove("hidden");
+    }
     
     const url = window.location.href.split("/");
     const groupName = url[url.length - 1];
       
   return (
     <div>
-          
+        <Popup title="Are You Sure?" text="text" buttonFunction={()=>{
+             dispatch(leaveGroup(groupName));
+             navigate("/groups");
+          }} />
         <section
       className="top-rated-movie tr-movie-bg"
       style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
@@ -43,8 +51,7 @@ const GroupBody = () => {
         </div>
         <div className=" mt-4 row justify-content-center">
           <button className="btn" onClick={()=>{
-             dispatch(leaveGroup(groupName));
-             navigate("/groups");
+             showMenu();
           }}>Leave Group</button>
           </div>
         {currentPage === "users" ? <GroupUsers/> : <GroupMovies/>}

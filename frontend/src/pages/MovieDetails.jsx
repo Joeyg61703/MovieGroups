@@ -101,6 +101,7 @@ const MovieDetails = () => {
         </section>
         {/* {Possible Review Section} */}
       </main>
+      
       <Footer />
     </div>
   );

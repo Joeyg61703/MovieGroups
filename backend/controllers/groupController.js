@@ -151,11 +151,17 @@ const leaveGroup = asyncHandler( async (req, res) => {
         {
             "$pull": {"users": {"id": req.user.id}}
         })
-     
+
     if(!group){
         res.status(400);
         throw new Error("Group not found");
     }
+    
+    //deletes group if the user was the last member when leaving
+    if(group.users.length-1 == 0){
+        await Group.deleteOne({name: req.params.name});
+    }
+     
 
    
     if(!req.user){

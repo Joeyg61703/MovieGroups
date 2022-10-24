@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { getGroupData } from '../../features/groups/groupSlice';
 import { useSelector } from 'react-redux';
+
 const GroupUsers = () => {
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -33,6 +34,7 @@ const GroupUsers = () => {
 
   return (
     <div>
+     
       <div className="">
           {users.map((currentUser) => {
             const {
