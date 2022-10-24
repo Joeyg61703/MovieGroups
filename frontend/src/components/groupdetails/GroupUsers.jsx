@@ -27,7 +27,7 @@ const GroupUsers = () => {
     const awaitData = async () => {
       await getData();
     }
-    console.log(user)
+
     awaitData();
   }, []);
 
@@ -39,7 +39,7 @@ const GroupUsers = () => {
               name,
               _id: id
             } = currentUser;
-            console.log(currentUser)
+            
 
             return (
               <div

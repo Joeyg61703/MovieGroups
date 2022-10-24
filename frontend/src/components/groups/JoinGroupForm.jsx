@@ -48,8 +48,8 @@ const JoinGroupForm = () => {
     }
 
     const data = await dispatch(joinGroup(userData))
-    // if(!data.error)
-    //   location.reload()
+    if(!data.error)
+      location.reload()
 
    }
   return (

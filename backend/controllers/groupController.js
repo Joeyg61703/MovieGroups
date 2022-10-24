@@ -147,7 +147,7 @@ const getMyGroups = asyncHandler(async (req, res) => {
 
 const leaveGroup = asyncHandler( async (req, res) => {
 
-    const group = await Group.findOneAndUpdate({_id: req.params.id,},
+    const group = await Group.findOneAndUpdate({name: req.params.name},
         {
             "$pull": {"users": {"id": req.user.id}}
         })

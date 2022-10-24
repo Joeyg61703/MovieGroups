@@ -41,10 +41,10 @@ export const joinGroup = createAsyncThunk("/groups/join", async (groupData, thun
   }
 })
 
-export const leaveGroup = createAsyncThunk("groups/leave", async (id, thunkAPI) =>{
+export const leaveGroup = createAsyncThunk("groups/leave", async (name, thunkAPI) =>{
   try{
       const token = thunkAPI.getState().auth.user.token;
-      return await groupService.leaveGroup(id, token);
+      return await groupService.leaveGroup(name, token);
   }catch(error){
       const message =
       (error.response &&

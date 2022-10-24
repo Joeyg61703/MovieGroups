@@ -30,7 +30,7 @@ const Groups = () => {
   return (
     <>
     <Header/>
-    <main  className="top-rated-movie tr-movie-bg full"
+    <main  className="top-rated-movie tr-movie-bg full max-width"
     style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}>
       <div className="row justify-content-center mb-4">
             <li className={"mr-5 bg-transparent sub-nav create sub-nav-active"} onClick={()=>{handleClick("create")}}>CREATE</li>

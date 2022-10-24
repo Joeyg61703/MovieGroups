@@ -1,9 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import GroupMovies from './GroupMovies';
 import GroupUsers from './GroupUsers';
+import { useDispatch, useSelector } from 'react-redux';
+import { leaveGroup } from '../../features/groups/groupSlice';
+import { useNavigate } from 'react-router-dom';
 
 const GroupBody = () => {
-
+  const {user} = useSelector(
+    (state) => state.auth
+  )
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState("users");
 
     function handleClick(state){
@@ -18,8 +25,10 @@ const GroupBody = () => {
         movieButton.classList.add("sub-nav-active");
       }
     }
-  
     
+    const url = window.location.href.split("/");
+    const groupName = url[url.length - 1];
+      
   return (
     <div>
           
@@ -32,6 +41,12 @@ const GroupBody = () => {
             <li className={"mr-5 bg-transparent sub-nav users sub-nav-active"} onClick={()=>{handleClick("users")}}>Users</li>
             <li className={"bg-transparent sub-nav movies"} onClick={()=>{handleClick("movies")}}>Movies</li>
         </div>
+        <div className=" mt-4 row justify-content-center">
+          <button className="btn" onClick={()=>{
+             dispatch(leaveGroup(groupName));
+             navigate("/groups");
+          }}>Leave Group</button>
+          </div>
         {currentPage === "users" ? <GroupUsers/> : <GroupMovies/>}
         </div>
 
