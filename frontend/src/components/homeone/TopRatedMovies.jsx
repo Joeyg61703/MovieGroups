@@ -111,10 +111,9 @@ const TopRatedMovies = () => {
               poster_path: image,
               title,
               release_date: date,
-              quality,
+
               runtime: duration,
               vote_average: ratings,
-              media_type
             } = elem;
 
             return (

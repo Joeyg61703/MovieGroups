@@ -36,21 +36,21 @@ const SearchMovies = () => {
       style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
     >
       <form
-        className="d-flex flex-column   p-5 justify-content-between align-items-center"
+        className="d-flex flex-row   p-5 justify-content-center align-items-center"
         action=""
       >
         <input
-          className="form-input text-center"
+          className="form-input search-form-input text-center"
           type="text"
           name="searchText"
-          placeholder="Movie"
+          placeholder=""
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
           }}
         />
         <button
-          className="btn d-flex justify-content-center align-items-center mt-5"
+          className="btn d-flex justify-content-center align-items-center  search-button"
           type="submit"
           onClick={searchMovies}
         >

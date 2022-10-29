@@ -2,41 +2,20 @@ import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { getGroupData } from '../../features/groups/groupSlice';
 import { useSelector } from 'react-redux';
+import {BiCrown} from "react-icons/bi";
 
-const GroupUsers = () => {
+const GroupUsers = ({users, groupData}) => {
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )
-
-  const dispatch = useDispatch();
-  const [users, setUsers] = useState([]);
-
-  const getData = async () => {
-    const url = window.location.href.split("/");
-    const movieName = url[url.length - 1];
-    const data = await dispatch(getGroupData(movieName));
-    const {group, userArray} = data.payload;
-    setUsers(userArray);
-    //console.log(movieName, group, userArray);
-  }
-
-  useEffect(()=>{
-    
-    const awaitData = async () => {
-      await getData();
-    }
-
-    awaitData();
-  }, []);
-
-  return (
+  const isOwner = user._id == groupData.owner;
+   return (
     <div>
      
       <div className="">
-          {users.map((currentUser) => {
+          {users?.map((currentUser) => {
             const {
               name,
               _id: id

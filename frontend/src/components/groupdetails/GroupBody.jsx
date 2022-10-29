@@ -4,6 +4,8 @@ import GroupUsers from './GroupUsers';
 import { useDispatch, useSelector } from 'react-redux';
 import { leaveGroup } from '../../features/groups/groupSlice';
 import { useNavigate } from 'react-router-dom';
+import { getGroupData } from '../../features/groups/groupSlice';
+
 import Popup from "../Popup";
 const GroupBody = () => {
   const {user} = useSelector(
@@ -11,9 +13,11 @@ const GroupBody = () => {
   )
   const dispatch = useDispatch();
   const navigate = useNavigate();
-    const [currentPage, setCurrentPage] = useState("users");
+  const [currentPage, setCurrentPage] = useState("users");
+  const [users, setUsers] = useState([]);
+  const [groupData, setGroupData] = useState({});
 
-    function handleClick(state){
+    const handleClick = (state) => {
       setCurrentPage(state);
       const userButton = document.querySelector(".users");
       const movieButton = document.querySelector(".movies");
@@ -26,17 +30,35 @@ const GroupBody = () => {
       }
     }
 
-    function showMenu(){
+    const showMenu = () => {
       const popup = document.getElementById("popup");
         popup.classList.remove("hidden");
     }
     
     const url = window.location.href.split("/");
     const groupName = url[url.length - 1];
+  
+    const getData = async () => {
+      const data = await dispatch(getGroupData(groupName));
+      const {group, userArray} = data.payload;
+      setGroupData(group);
+      setUsers(userArray);
+      
+    }
+  
+    useEffect(()=>{
+      
+      const awaitData = async () => {
+        await getData();
+      }
+  
+      awaitData();
+    }, []);
+
       
   return (
     <div>
-        <Popup title="Are You Sure?" text="text" buttonFunction={()=>{
+        <Popup type="group" groupUsers={users} groupData={groupData} secondButton="Leave Group" secondButtonFunction={()=>{
              dispatch(leaveGroup(groupName));
              navigate("/groups");
           }} />
@@ -54,7 +76,7 @@ const GroupBody = () => {
              showMenu();
           }}>Leave Group</button>
           </div>
-        {currentPage === "users" ? <GroupUsers/> : <GroupMovies/>}
+        {currentPage === "users" ? <GroupUsers groupData={groupData} users={users}/> : <GroupMovies users={users}/>}
         </div>
 
     </section>

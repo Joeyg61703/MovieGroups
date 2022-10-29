@@ -1,8 +1,22 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
-const GroupMovies = () => {
+const GroupMovies = ({users}) => {
+  
+  const getMovies = () => {
+    
+  }
+
+  useEffect(() => {
+    
+  
+    
+  }, [])
+  
+  
   return (
-    <div>GroupMovies</div>
+    <div>
+
+    </div>
   )
 }
 
