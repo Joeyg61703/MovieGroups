@@ -56,6 +56,37 @@ export const leaveGroup = createAsyncThunk("groups/leave", async (name, thunkAPI
   }
 })
 
+export const makeOwner = createAsyncThunk("groups/makeOwner", async ({groupName, userName}, thunkAPI) =>{
+  try{
+    
+      const token = thunkAPI.getState().auth.user.token;
+      
+      return await groupService.makeOwner({groupName, userName}, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const kickUser = createAsyncThunk("groups/users/kick", async ({groupName, userName}, thunkAPI) =>{
+  try{
+      const token = thunkAPI.getState().auth.user.token;
+      return await groupService.kickUser({groupName, userName}, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const getMyGroups = createAsyncThunk("groups/getMine", async (_, thunkAPI) => {
   try{
@@ -161,6 +192,29 @@ export const groupSlice = createSlice({
         state.groups = state.groups.filter((group) => group._id !== action.payload.id)
       })
       .addCase(leaveGroup.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      }).addCase(kickUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(kickUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.groups = state.groups.filter((group) => group._id !== action.payload.id)
+      })
+      .addCase(kickUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      }).addCase(makeOwner.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(makeOwner.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(makeOwner.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -27,11 +27,6 @@ const groupSchema = new mongoose.Schema({
             ref: 'User',
             required: true 
         },
-        role: {
-            type: String,
-            default: "member",
-            required: true
-        }
     }]
 
 },{

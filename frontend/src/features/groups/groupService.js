@@ -68,6 +68,35 @@ const leaveGroup = async (groupName, token) => {
     return response.data;
 }
 
+const makeOwner = async ({groupName, userName}, token) => {
+
+    
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    console.log(config)
+    
+    const response = await axios.put(`${API_URL}${groupName}/${userName}`, config);
+    return response.data;
+
+}
+
+const kickUser = async ({groupName, userName}, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + groupName + "/" + userName, config);
+    return response.data;
+
+}
+
 //get group data
 const getGroupData = async (groupName, token) => {
     const config = {
@@ -89,7 +118,9 @@ const groupService = {
     leaveGroup,
     getGroupData,
     getAllGroups,
-    joinGroup
+    joinGroup,
+    kickUser,
+    makeOwner
 }
 
 export default groupService;

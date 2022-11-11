@@ -26,6 +26,11 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Name already taken");
     }
 
+    if(name.length > 12){
+        res.status(400);
+        throw new Error("Name Can Be Max 12 Characters");
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 

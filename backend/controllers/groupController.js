@@ -173,6 +173,55 @@ const leaveGroup = asyncHandler( async (req, res) => {
     res.status(200).json({id: req.params.id})
 })
 
+const makeOwner = asyncHandler(async (req, res) => {
+    const groupName = req.params.groupName;
+    const newOwner = await User.findOne({name: req.params.userName});
+
+    console.log(groupName, newOwner)
+
+    let group = await Group.findOneAndUpdate({
+        name: groupName
+    }, {
+        owner: newOwner._id
+    })
+    
+    if(!group){
+        res.status(400);
+        throw new Error("Group not found");
+    }
+
+    if(!req.user){
+     res.status(401)
+     throw new Error("User not found");
+    }
+ 
+    res.status(200).json(newOwner)
+});
+
+const kickUser = asyncHandler(async (req, res) => {
+    const groupName = req.params.groupName;
+    const kickedUser = await User.findOne({name: req.params.userName});
+    
+    let group = await Group.findOneAndUpdate({
+        "name": groupName
+    }, {
+        "$pull": {"users": {"id": kickedUser._id}}
+    })
+
+    if(!group){
+        res.status(400);
+        throw new Error("Group not found");
+    }
+
+    if(!req.user){
+     res.status(401)
+     throw new Error("User not found");
+    }
+ 
+    res.status(200).json(kickedUser)
+
+})
+
 const getGroupData = asyncHandler(async (req, res) => {
 
     const groupName = req.params.name;
@@ -205,5 +254,7 @@ module.exports = {
     getMyGroups,
     leaveGroup,
     getGroupData,
-    getAllGroups
+    getAllGroups,
+    kickUser,
+    makeOwner
 }

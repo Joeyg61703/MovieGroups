@@ -11,7 +11,7 @@ const Popup = ({type, secondButtonFunction, groupUsers, groupData}) => {
     let desc = "";
     let secondButton = "";
     if(type == "group"){
-
+        
         secondButton = "Leave Group";
 
         if(groupUsers.length > 1){
@@ -29,19 +29,24 @@ const Popup = ({type, secondButtonFunction, groupUsers, groupData}) => {
         }
     }
 
+    if(type == "users"){
+        title = "Make Owner?";
+        desc = `Are You sure you want to make  owner?`;
+    }
+
     function hideMenu(){
-        const popup = document.getElementById("popup");
+        const popup = document.getElementById(`${type}-popup`);
         popup.classList.add("hidden");
     }
 
   return (
-    <div id="popup" className="hidden popup-background">
+    <div id={`${type}-popup`} className="hidden popup-background">
         <div className="popup-window">
             <div className="popup-title-bar">
-                <h1 className="ml-3">{title}</h1>
+                <h1 id="popup-title" className="ml-3">{title}</h1>
             </div>
             <div className="popup-message">
-                <p className="ml-3">{desc}</p>
+                <p id="popup-text" className="ml-3">{desc}</p>
             </div>
             <div className="popup-button-bar">
                 {secondButton && <button className="btn" onClick={secondButtonFunction}>{secondButton}</button>}

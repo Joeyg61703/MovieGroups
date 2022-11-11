@@ -3117,5 +3117,9 @@ label {
 }
 
 .hidden{
-    display: none
+    display: none;
+}
+
+.hover-click:hover{
+    cursor:pointer;
 }
