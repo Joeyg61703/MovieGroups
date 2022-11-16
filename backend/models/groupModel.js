@@ -27,6 +27,28 @@ const groupSchema = new mongoose.Schema({
             ref: 'User',
             required: true 
         },
+    }],
+    movies: [{
+        id: {
+            type: String,
+            required: true,
+            default: ""
+        },
+        totalRating: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        totalUsers: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        averageRating: {
+            type: Number,
+            required: true,
+            default: 0
+        }
     }]
 
 },{

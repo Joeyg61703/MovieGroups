@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../models/userModel.js");
 const Group = require("../models/groupModel.js");
+const Movie = require("../models/movieModel.js");
 const bcrypt = require("bcryptjs");
 
 const createGroup = asyncHandler(async (req, res) => {
@@ -184,7 +185,7 @@ const makeOwner = asyncHandler(async (req, res) => {
     }, {
         owner: newOwner._id
     })
-    
+
     if(!group){
         res.status(400);
         throw new Error("Group not found");
@@ -247,6 +248,89 @@ const getAllGroups = asyncHandler(async (req, res) => {
     res.status(200).json(groups);
 })
 
+const calculateGroupMovies = asyncHandler(async (req, res) => {
+
+    let group = await Group.findOne({
+        "name": req.params.groupName
+    }) 
+
+    if(!group){
+        res.status(400);
+        throw new Error("Group Not Found");
+    }
+
+    let userArray = [];
+
+   
+    //movieIDS hold every Id of every movie collected
+    //moviesArray holds the group data about every movie collected
+    const allMovieIDS = [];
+    let moviesArray = [];
+
+    for(let i = 0; i < group.users.length; i++){
+        
+        const user = await User.findById(group.users[i].id);
+        const userMovies = user.movies;
+        let currentMovie = {}
+        
+        for(movieObj of userMovies){
+
+            
+            const {movie: movieObjectID, rating} = movieObj;
+
+            //movieObjectID = ID that points to Movie in Mongo Database
+
+            //MOVIE DATA IN DATABASE
+            const movie = await Movie.findOne({_id: movieObjectID});
+
+            //TMDBS MOVIE ID
+            const movieID = movie.movieId;
+            
+            //if any user movie is already accounted for because of another user
+            if(allMovieIDS.includes(movieID)){
+                //removes the movie that is a duplicate for it to be replaced with new info
+                movieDetails = moviesArray.find((movie) => movie.movieData.movieId == movieID);
+                moviesArray = moviesArray.filter((movie) => movie.movieData.movieId != movieID);
+
+                currentMovie = {
+                    movieData: movie,
+                    totalRating: movieDetails.totalRating + rating,
+                    totalUsers: movieDetails.totalUsers + 1,
+                    averageRating: (this.totalRating / this.totalUsers)
+                }
+            }
+            //if no previous user has that movie
+            else{
+                allMovieIDS.push(movieID);
+                currentMovie = {
+                    movieData: movie,
+                    totalRating: rating,
+                    totalUsers: 1,
+                    averageRating: (this.totalRating / this.totalUsers)
+                }
+            }
+            moviesArray.push(currentMovie);
+
+            console.log("TEST")
+        }
+        userArray.push(user)
+    }
+
+    Group.findOneAndUpdate({"name": req.params.groupName}, {
+        "$set":{
+            "movies": moviesArray
+        }
+    })
+
+    console.log(allMovieIDS);
+
+    console.log("-----------------MOVIES-----------------")
+    console.log(moviesArray)
+    console.log("-----------------STOP-----------------")
+    res.status(200).json(moviesArray);
+
+})
+
 
 module.exports = {
     createGroup,
@@ -256,5 +340,6 @@ module.exports = {
     getGroupData,
     getAllGroups,
     kickUser,
-    makeOwner
+    makeOwner,
+    calculateGroupMovies
 }

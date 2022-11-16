@@ -97,7 +97,7 @@ const kickUser = async ({groupName, userName}, token) => {
 
 }
 
-//get group data
+
 const getGroupData = async (groupName, token) => {
     const config = {
         headers: {
@@ -111,6 +111,20 @@ const getGroupData = async (groupName, token) => {
 }
 
 
+const getGroupMovies = async (groupName, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(API_URL + groupName + "/movies", config);
+
+    return response.data;
+}
+
+
+
 
 const groupService = {
     createGroup,
@@ -120,7 +134,8 @@ const groupService = {
     getAllGroups,
     joinGroup,
     kickUser,
-    makeOwner
+    makeOwner,
+    getGroupMovies
 }
 
 export default groupService;

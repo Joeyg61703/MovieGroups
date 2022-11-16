@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../models/userModel.js");
 const Movie = require("../models/movieModel.js");
+const { default: mongoose } = require("mongoose");
 
 const addMovie = asyncHandler(async (req, res) => {
     
@@ -125,8 +126,19 @@ const rateMovie = asyncHandler( async (req, res) => {
                     "array.user": req.user.id
                 }
             ]
-        }
-        )
+        })
+
+    const user = await User.findOneAndUpdate({_id: req.user.id}, {
+        
+            "$set": {"movies.$[array].rating": Number(req.params.rating)}
+        },
+        {
+            "arrayFilters": [
+                {
+                    "array.movie": mongoose.Types.ObjectId(req.params.id)
+                }
+            ]
+        })
 
 
     // const movie = await Movie.findOne({_id: req.params.id});
