@@ -88,7 +88,7 @@ const deleteMovie = asyncHandler( async (req, res) => {
         {
             "$pull": {"users": {"user": req.user.id}}
         })
-    const user = await User.findOneAndUpdate({},
+    const user = await User.findOneAndUpdate({_id: req.user.id},
         {
             "$pull": {"movies": {"movie": req.params.id}}
         })
