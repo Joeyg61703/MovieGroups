@@ -88,6 +88,10 @@ const deleteMovie = asyncHandler( async (req, res) => {
         {
             "$pull": {"users": {"user": req.user.id}}
         })
+    const user = await User.findOneAndUpdate({},
+        {
+            "$pull": {"movies": {"movie": req.params.id}}
+        })
      
     if(!movie){
         res.status(400);
