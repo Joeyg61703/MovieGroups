@@ -98,7 +98,6 @@ const GroupMovies = ({users}) => {
               movieData: {image, title, movieId: id},
               totalRating,
               totalUsers,
-              averageRating
 
             } = elem;
 
