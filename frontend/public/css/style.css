@@ -3123,3 +3123,8 @@ label {
 .hover-click:hover{
     cursor:pointer;
 }
+
+.owner-buttons{
+    -webkit-animation: 800ms ease-in-out 0s normal none 1 running fadeInUp;
+	animation: 800ms ease-in-out 0s normal none 1 running fadeInUp;
+}
