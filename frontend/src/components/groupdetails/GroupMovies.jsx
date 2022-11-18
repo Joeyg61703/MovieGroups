@@ -15,15 +15,17 @@ const GroupMovies = ({users}) => {
   const url = window.location.href.split("/");
 
   const [groupMovies, setGroupMovies] = useState([])
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [groupName, setGroupName] = useState(url[url.length - 1]);
-  
+  const [currentFilter, setCurrentFilter] = useState("topRated");
   
   useEffect(() => {
 
     const awaitMovies = async () => {
       const movies = await dispatch(getGroupMovies(groupName));
       console.log(movies.payload)
-      setGroupMovies(movies.payload);    
+      setGroupMovies(movies.payload);
+      setFilteredMovies(movies.payload.topRated);    
     };
     awaitMovies();
   }, []);
@@ -33,7 +35,7 @@ const GroupMovies = ({users}) => {
     <div>
         <section
       className="top-rated-movie tr-movie-bg"
-      style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
+      
     >
       <div className="container">
         <div className="row justify-content-center">
@@ -46,12 +48,51 @@ const GroupMovies = ({users}) => {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="tr-movie-menu-active text-center">
-             
+            <button
+                className={currentFilter === "topRated" ? "active" : ""}
+                data-filter=".cat-one"
+                onClick={() => {
+                  setCurrentFilter("topRated");
+                  setFilteredMovies(groupMovies["topRated"]);
+                }}
+              >
+                Top Rated
+              </button>
+              <button
+                className={currentFilter === "lowestRated" ? "active" : ""}
+                data-filter=".cat-one"
+                onClick={() => {
+                  setCurrentFilter("lowestRated");
+                  setFilteredMovies(groupMovies["lowestRated"]);
+                }}
+              >
+                Lowest Rated
+              </button>
+              <button
+                className={currentFilter === "mostRated" ? "active" : ""}
+                data-filter=".cat-one"
+                onClick={() => {
+                  setCurrentFilter("mostRated");
+                  setFilteredMovies(groupMovies["mostRated"]);
+                }}
+              >
+                Most Rated
+              </button>
+              <button
+                className={currentFilter === "leastRated" ? "active" : ""}
+                data-filter=".cat-one"
+                onClick={() => {
+                  setCurrentFilter("leastRated");
+                  setFilteredMovies(groupMovies["leastRated"]);
+                }}
+              >
+                Least Rated
+              </button>
             </div>
           </div>
         </div>
       <div className="row tr-movie-active">
-          {groupMovies && groupMovies?.map((elem) => {
+          {filteredMovies && filteredMovies?.map((elem) => {
             
             const {
               movieData: {image, title, movieId: id},

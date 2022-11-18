@@ -236,9 +236,7 @@ const getGroupData = asyncHandler(async (req, res) => {
         const user = await User.findById(group.users[i].id)
         userArray.push(user)
     }
-
-    console.log(group, userArray)
-    
+   
     res.status(200).json({group, userArray});
 })
 
@@ -259,14 +257,12 @@ const calculateGroupMovies = asyncHandler(async (req, res) => {
         throw new Error("Group Not Found");
     }
 
-    let userArray = [];
-
-   
     //movieIDS hold every Id of every movie collected
     //moviesArray holds the group data about every movie collected
     const allMovieIDS = [];
     let moviesArray = [];
 
+    //loop over every user in the group
     for(let i = 0; i < group.users.length; i++){
         
         const user = await User.findById(group.users[i].id);
@@ -286,12 +282,13 @@ const calculateGroupMovies = asyncHandler(async (req, res) => {
             //TMDBS MOVIE ID
             const movieID = movie.movieId;
             
-            //if any user movie is already accounted for because of another user
+            //if movie already exists
             if(allMovieIDS.includes(movieID)){
                 //removes the movie that is a duplicate for it to be replaced with new info
                 movieDetails = moviesArray.find((movie) => movie.movieData.movieId == movieID);
                 moviesArray = moviesArray.filter((movie) => movie.movieData.movieId != movieID);
 
+                
                 currentMovie = {
                     movieData: movie,
                     totalRating: movieDetails.totalRating + rating,
@@ -299,7 +296,7 @@ const calculateGroupMovies = asyncHandler(async (req, res) => {
                     averageRating: (this.totalRating / this.totalUsers)
                 }
             }
-            //if no previous user has that movie
+            //movie does not exist yet
             else{
                 allMovieIDS.push(movieID);
                 currentMovie = {
@@ -311,23 +308,20 @@ const calculateGroupMovies = asyncHandler(async (req, res) => {
             }
             moviesArray.push(currentMovie);
 
-            console.log("TEST")
         }
-        userArray.push(user)
     }
 
-    Group.findOneAndUpdate({"name": req.params.groupName}, {
-        "$set":{
-            "movies": moviesArray
-        }
-    })
-
-    console.log(allMovieIDS);
-
-    console.log("-----------------MOVIES-----------------")
-    console.log(moviesArray)
-    console.log("-----------------STOP-----------------")
-    res.status(200).json(moviesArray);
+    const topRated = [...moviesArray].sort((a,b) =>  (b.totalRating/b.totalUsers) - (a.totalRating/a.totalUsers));
+    const lowestRated = [...moviesArray].sort((a,b) => (a.totalRating/a.totalUsers) - (b.totalRating/b.totalUsers));
+    const mostRated = [...moviesArray].sort((a,b) => b.totalUsers - a.totalUsers);
+    const leastRated = [...moviesArray].sort((a,b) => a.totalUsers - b.totalUsers);
+    let movieFilters = {
+        topRated: topRated,
+        lowestRated: lowestRated,
+        mostRated: mostRated,
+        leastRated: leastRated
+    }
+    res.status(200).json(movieFilters);
 
 })
 
