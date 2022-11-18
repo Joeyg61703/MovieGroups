@@ -23,7 +23,6 @@ const GroupMovies = ({users}) => {
 
     const awaitMovies = async () => {
       const movies = await dispatch(getGroupMovies(groupName));
-      console.log(movies.payload)
       setGroupMovies(movies.payload);
       setFilteredMovies(movies.payload.topRated);    
     };
