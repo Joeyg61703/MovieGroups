@@ -9,7 +9,7 @@ const initialState = {
     message: "",
 }
 
-//Add Movie
+//create nonexisting Group
 export const createGroup = createAsyncThunk("/groups/create", async (groupData, thunkAPI) =>{
     try{
         const token = thunkAPI.getState().auth.user.token;
@@ -25,10 +25,11 @@ export const createGroup = createAsyncThunk("/groups/create", async (groupData, 
     }
 })
 
-export const leaveGroup = createAsyncThunk("groups/leave", async (id, thunkAPI) =>{
+//join exisiting group
+export const joinGroup = createAsyncThunk("/groups/join", async (groupData, thunkAPI) =>{
   try{
       const token = thunkAPI.getState().auth.user.token;
-      return await groupService.leaveGroup(id, token);
+      return await groupService.joinGroup(groupData, token);
   }catch(error){
       const message =
       (error.response &&
@@ -40,6 +41,52 @@ export const leaveGroup = createAsyncThunk("groups/leave", async (id, thunkAPI) 
   }
 })
 
+export const leaveGroup = createAsyncThunk("groups/leave", async (name, thunkAPI) =>{
+  try{
+      const token = thunkAPI.getState().auth.user.token;
+      return await groupService.leaveGroup(name, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const makeOwner = createAsyncThunk("groups/makeOwner", async ({groupName, userName}, thunkAPI) =>{
+  try{
+    
+      const token = thunkAPI.getState().auth.user.token;
+      
+      return await groupService.makeOwner({groupName, userName}, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const kickUser = createAsyncThunk("groups/users/kick", async ({groupName, userName}, thunkAPI) =>{
+  try{
+      const token = thunkAPI.getState().auth.user.token;
+      return await groupService.kickUser({groupName, userName}, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const getMyGroups = createAsyncThunk("groups/getMine", async (_, thunkAPI) => {
   try{
@@ -86,6 +133,21 @@ export const getGroupData = createAsyncThunk("groups/getData", async (groupName,
   }
 })
 
+export const getGroupMovies = createAsyncThunk("groups/getMovies", async (groupName, thunkAPI) => {
+  try{
+      const token = thunkAPI.getState().auth.user.token;
+      return await groupService.getGroupMovies(groupName, token);
+  }catch(error){
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 
 
 export const groupSlice = createSlice({
@@ -109,7 +171,21 @@ export const groupSlice = createSlice({
         state.isError = true
         state.isSuccess = false
         state.message = action.payload
-      })  
+      }) 
+      .addCase(joinGroup.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(joinGroup.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.groups.push(action.payload)
+      })
+      .addCase(joinGroup.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+        state.message = action.payload
+      }) 
       .addCase(getMyGroups.pending, (state) => {
         state.isLoading = true
       })
@@ -134,6 +210,29 @@ export const groupSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      }).addCase(kickUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(kickUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.groups = state.groups.filter((group) => group._id !== action.payload.id)
+      })
+      .addCase(kickUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      }).addCase(makeOwner.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(makeOwner.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(makeOwner.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       }).addCase(getGroupData.pending, (state) => {
         state.isLoading = true
       })
@@ -154,6 +253,18 @@ export const groupSlice = createSlice({
         state.isSuccess = true
       })
       .addCase(getAllGroups.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getGroupMovies.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getGroupMovies.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(getGroupMovies.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

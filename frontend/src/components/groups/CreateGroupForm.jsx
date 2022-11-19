@@ -7,7 +7,7 @@ import { createGroup, reset } from '../../features/groups/groupSlice'
 
 
 
-const CreateGroup = () => {
+const CreateGroupForm = () => {
   const [formData, setFormData] = useState({
     groupName: '',
     password: '',
@@ -25,8 +25,8 @@ const CreateGroup = () => {
 
   useEffect(() => {
     if (isError) {
-      //console.log(message)
-      toast.error(message)
+      if(message.includes("CREATE"))
+        toast.error(message)
     }
 
 
@@ -52,7 +52,7 @@ const CreateGroup = () => {
     if(!data.error)
       location.reload()
 
-  }
+   }
   return (
 
      <div className="container">
@@ -89,4 +89,4 @@ const CreateGroup = () => {
   )
 }
 
-export default CreateGroup
+export default CreateGroupForm

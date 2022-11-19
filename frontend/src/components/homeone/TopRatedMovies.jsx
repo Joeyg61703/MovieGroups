@@ -11,9 +11,10 @@ const TopRatedMovies = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user,  isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )
+
   const dispatch = useDispatch();
 
   
@@ -54,6 +55,7 @@ const TopRatedMovies = () => {
     awaitMovies();
     //console.log("test", trendingMovies);
   }, []);
+
 
   return (
     <section
@@ -111,10 +113,9 @@ const TopRatedMovies = () => {
               poster_path: image,
               title,
               release_date: date,
-              quality,
+
               runtime: duration,
               vote_average: ratings,
-              media_type
             } = elem;
 
             return (

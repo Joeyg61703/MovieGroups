@@ -26,6 +26,11 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Name already taken");
     }
 
+    if(name.length > 12){
+        res.status(400);
+        throw new Error("Name Can Be Max 12 Characters");
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -59,6 +64,9 @@ const loginUser = asyncHandler(async (req, res) => {
     email = email.toLowerCase();
     const user = await User.findOne({email});
     
+
+    //Handles checking the equality of the hashed password in the database
+    //to the one entered in the login form
     if(user && (await bcrypt.compare(password, user.password))){
         res.json({
             _id: user.id,

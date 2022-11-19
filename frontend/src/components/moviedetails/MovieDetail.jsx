@@ -6,6 +6,7 @@ import {addMovie} from "../../features/movies/movieSlice";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const MovieDetail = () => {
   
   const [movieData, setMovieData] = useState([]);
@@ -55,6 +56,7 @@ const MovieDetail = () => {
 
   return (
     <div>
+     
       <Header />
       <main>
         <section
@@ -217,6 +219,7 @@ const MovieDetail = () => {
     </section>
         {/* {Possible Review Section} */}
       </main>
+     
       <Footer />
     </div>
   );

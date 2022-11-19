@@ -6,6 +6,11 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        default: null,
+    },
+
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -22,10 +27,27 @@ const groupSchema = new mongoose.Schema({
             ref: 'User',
             required: true 
         },
-        role: {
+    }],
+    movies: [{
+        id: {
             type: String,
-            default: "member",
-            required: true
+            required: true,
+            default: ""
+        },
+        totalRating: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        totalUsers: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        averageRating: {
+            type: Number,
+            required: true,
+            default: 0
         }
     }]
 
