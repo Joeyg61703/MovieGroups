@@ -9,6 +9,7 @@ const Homeone = () => {
   const {user} = useSelector((state) => state.auth);
   return (
   <div>
+    
       <Header/>
     <main>
         {!user && <Banner/>}
