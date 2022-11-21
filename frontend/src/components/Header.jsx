@@ -98,29 +98,24 @@ if ($('.scroll-to-target').length) {
             <div className="menu-wrap">
               <nav className="menu-nav show">
                 <div className="logo">
-                  <Link to="/">
+                  <Link onClick={()=>{window.location.href="/"}}>
                     <img src="/img/logo/logo.png" alt="Logo" />
                   </Link>
                 </div>
                 <div className="navbar-wrap main-menu d-none d-lg-flex">
                   <ul className="navigation">
-                    <li className=""><Link to="/"> Home</Link></li>
-                    {/* <li className="menu-item-has-children"><a href="/movie">Movie</a>
+                    <li className=""><Link onClick={()=>{window.location.href="/"}}> Home</Link></li>
+                    <li className="menu-item-has-children"><a href="/genre">Genres</a>
                       <ul className="submenu">
-                        <li><a href="/movie/trending">Trending</a></li>
-                        <li><a href="/movie/new">New</a></li>
+                        <li><a href="/genre/action">Action</a></li>
+                        <li><a href="/genre/comedy">Comedy</a></li>
+                        <li><a href="/genre/horror">Horror</a></li>
+                        <li><a href="/genre/science fiction">Science Fiction</a></li>
+                        <li><a href="/genre">All</a></li>
                       </ul>
                     </li>
-                    <li><a href="/tv-show">tv show</a></li>
-                   
-                    <li className="menu-item-has-children"><a href="/#">Reviews</a>
-                      <ul className="submenu">
-                        <li><a href="/reviews">Our Blog</a></li>
-                        <li><a href="/blog-details">Blog Details</a></li>
-                      </ul>
-                    </li> */}
-                    <li><Link to={user ? "/groups" : "/login"}>Groups</Link></li>
-                    <li><Link to={user ? "/profile" : "/login"}>My Profile</Link></li>
+                    <li><Link onClick={()=>{window.location.href = user ? "/groups" : "/login"}}>Groups</Link></li>
+                    <li><Link onClick={()=>{window.location.href = user ? "/profile" : "/login"}}>My Profile</Link></li>
                   </ul>
                 </div>
                 <div className="header-action d-none d-md-block">

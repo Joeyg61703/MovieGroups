@@ -25,7 +25,7 @@ const MovieDetails = () => {
   useEffect(() => {
     const awaitMovies = async () => {
       const movie = await getData();
-      //console.log(movie);
+      
       setMovieData(movie);
     };
     awaitMovies();

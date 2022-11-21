@@ -22,7 +22,7 @@ const SearchMovies = () => {
     );
     const movies = await request.data.results.splice(0, 12);
     setMoviesFound(movies);
-    //console.log(movies)
+    
   };
 
   useEffect(() => {

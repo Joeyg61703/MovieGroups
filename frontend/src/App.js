@@ -13,6 +13,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import GroupDetails from './pages/GroupDetails';
 import Genre from './pages/Genre';
 import UserPage from './pages/UserPage';
+import Error404 from './pages/Error404';
+import GenreLinks from './pages/GenreLinks';
+import ScrollToTop from './components/ScrollToTop';
 
 
 function App() {
@@ -31,7 +34,7 @@ function App() {
   return (
     <div className="App">
      <Router>
-       
+       <ScrollToTop/>
       <Routes>
        <Route exact={true} path="/" element={<Homeone/>}/>     
       
@@ -51,7 +54,15 @@ function App() {
 
        <Route path="/user/:name" element={<UserPage/>}/>
 
+
+       <Route path = "/genre" element={<GenreLinks/>}/>
        <Route path="/genre/:genre" element={<Genre/>}/>
+       <Route path="/genre/:genre/:pageNumber" element={<Genre/>}/>
+
+
+       <Route path="/404" element={<Error404/>}/>
+       <Route path="*" element={<Error404/>}/>
+       
       
       </Routes>
   </Router>

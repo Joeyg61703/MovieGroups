@@ -3128,3 +3128,24 @@ label {
     -webkit-animation: 800ms ease-in-out 0s normal none 1 running fadeInUp;
 	animation: 800ms ease-in-out 0s normal none 1 running fadeInUp;
 }
+
+.page-button{
+   
+    width: 10%;
+    min-width: 40px;
+    max-width: 100px;
+}
+
+.text-white {
+    color: white;
+}
+
+.genre-name{
+    text-align: center;
+}
+
+.genre-name:hover{
+    color: rgb(195, 19, 19);
+    transform: scale(120%);
+    cursor: pointer;
+}

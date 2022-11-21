@@ -36,7 +36,7 @@ const MovieDetail = () => {
       `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${process.env.REACT_APP_API_KEY}`
     );
     const movies = await request.data.results.splice(0,4);
-    //console.log("Recommended: ", movies)
+    
     return movies;
   };
 
@@ -46,12 +46,12 @@ const MovieDetail = () => {
   
       const movie = await getData();
       const recommendations = await getRecommended();
-      //console.log(movie);
+    
       setMovieData(movie);
       setRecommendedMovies(recommendations);
     };
     awaitMovies();
-    //console.log(movieId === location.href.split("/")[location.href.split("/").length - 1])
+    
   }, [movieId]);
 
   return (
@@ -168,7 +168,8 @@ const MovieDetail = () => {
               >
                 <div className="movie-item mb-60">
                   <div className="movie-poster">
-                    <Link onClick={()=>{setMovieId(id)}} to={"../../movie-details/" + id}>
+                    <Link onClick={()=>{setMovieId(id)
+                    window.location.href=`/movie-details/${id}`}} >
                       <img
                         src={
                           image !== null
@@ -182,7 +183,10 @@ const MovieDetail = () => {
                   <div className="movie-content">
                     <div className="top">
                       <h5 className="title">
-                      <Link onClick={()=>{setMovieId(id)}} to={"../../movie-details/" + id}>{title}</Link>
+                      <Link onClick={()=>{
+                        setMovieId(id)
+                        window.location.href=`/movie-details/${id}`
+                        }}>{title}</Link>
                       </h5>
                       <span className="date">{date.split("-")[0]}</span>
                     </div>
