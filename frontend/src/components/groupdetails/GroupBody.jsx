@@ -37,9 +37,6 @@ const GroupBody = () => {
     
     const url = window.location.href.split("/");
     let groupName = url[url.length - 1].replaceAll("%20", " ");
-    //groupName = groupName.split(" ").map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(" ");
-    console.log(groupName)
-    let inGroup = false;
 
     const getData = async () => {
       const data = await dispatch(getGroupData(groupName));
