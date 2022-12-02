@@ -13,10 +13,9 @@ const GroupMovies = ({users}) => {
    
   const dispatch = useDispatch();
   const url = window.location.href.split("/");
-
   const [groupMovies, setGroupMovies] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [groupName, setGroupName] = useState(url[url.length - 1]);
+  const [groupName, setGroupName] = useState(url[url.length - 1].replaceAll("%20", " "));
   const [currentFilter, setCurrentFilter] = useState("topRated");
   
   useEffect(() => {

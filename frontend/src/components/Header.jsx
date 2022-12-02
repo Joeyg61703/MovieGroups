@@ -104,7 +104,7 @@ if ($('.scroll-to-target').length) {
                 </div>
                 <div className="navbar-wrap main-menu d-none d-lg-flex">
                   <ul className="navigation">
-                    <li className=""><Link onClick={()=>{window.location.href="/"}}> Home</Link></li>
+                    <li className=""><a href="/">Home</a></li>
                     <li className="menu-item-has-children"><a href="/genre">Genres</a>
                       <ul className="submenu">
                         <li><a href="/genre/action">Action</a></li>
@@ -114,8 +114,8 @@ if ($('.scroll-to-target').length) {
                         <li><a href="/genre">All</a></li>
                       </ul>
                     </li>
-                    <li><Link onClick={()=>{window.location.href = user ? "/groups" : "/login"}}>Groups</Link></li>
-                    <li><Link onClick={()=>{window.location.href = user ? "/profile" : "/login"}}>My Profile</Link></li>
+                    <li><a href={user ? "/groups" : "/login"}>Groups</a></li>
+                    <li><a href={user ? "/profile" : "/login"}>My Profile</a></li>
                   </ul>
                 </div>
                 <div className="header-action d-none d-md-block">
