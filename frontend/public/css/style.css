@@ -1144,6 +1144,7 @@ label {
 }
 .movie-poster img {
     max-width: 100%;
+    width: 400px;
     border-radius: 5px;
 }
 .movie-poster {
@@ -3148,4 +3149,10 @@ label {
     color: rgb(195, 19, 19);
     transform: scale(120%);
     cursor: pointer;
+}
+
+.lazy-image{
+    max-width: 100%;
+    width: 400px;
+    border-radius: 5px;
 }
