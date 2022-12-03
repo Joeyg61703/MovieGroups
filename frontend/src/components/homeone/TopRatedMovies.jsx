@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import Menu from "../UpMovieItemMenu";
+import { LazyLoadImage } from 'react-lazy-load-image-component'; 
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {addMovie} from "../../features/movies/movieSlice";
@@ -46,14 +47,14 @@ const TopRatedMovies = () => {
       const trending = await getTrending();
       const topRated = await getTopRated();
       const nowPlaying = await getNowPlaying();
-      //console.log(trending, topRated, nowPlaying);
+      
       setTrendingMovies(trending);
       setTopRatedMovies(topRated);
       setNowPlayingMovies(nowPlaying);
       setMovieType(trending);
     };
     awaitMovies();
-    //console.log("test", trendingMovies);
+    
   }, []);
 
 
@@ -126,14 +127,18 @@ const TopRatedMovies = () => {
                 <div className="movie-item mb-60">
                   <div className="movie-poster">
                     <Link to={"movie-details/" + id}>
-                      <img
+                      <LazyLoadImage
+                        alt={title}
+                        height={455}
+                        width={400}
+                        className="lazy-image"
                         src={
                           image !== null
                             ? `https://image.tmdb.org/t/p/w400${image}`
                             : "https://via.placeholder.com/400x600"
                         }
-                        alt={title}
-                      />
+                        />
+
                     </Link>
                   </div>
                   <div className="movie-content">

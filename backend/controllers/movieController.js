@@ -4,8 +4,6 @@ const Movie = require("../models/movieModel.js");
 const { default: mongoose } = require("mongoose");
 
 const addMovie = asyncHandler(async (req, res) => {
-    
-    console.log("Test")
 
     const movieId = req.body.id;
   
@@ -40,9 +38,6 @@ const addMovie = asyncHandler(async (req, res) => {
     }
  
    
-    console.log("Movie:", movies)
-    // console.log(movieExists);
-
     if(!req.user){
         res.status(401)
         throw new Error("User not found");
@@ -50,11 +45,10 @@ const addMovie = asyncHandler(async (req, res) => {
        
        let user = await User.findOne({_id: req.user.id});
     
-    
-        // console.log(movieData)
+
         user = await User.findOneAndUpdate({_id: req.user.id}, 
             {"$push": {"movies": {"movie": movieData._id}}});
-        // console.log(user.movies)
+ 
         res.status(200).json(movieData)
     
 })
@@ -71,9 +65,9 @@ const getMyMovies = asyncHandler(async (req, res) => {
 
 const getUserMovies = asyncHandler(async (req, res) => {
 
-    console.log("Test")
+   
     const user = await User.findOne({name: req.params.name});
-    console.log("User: ", user)
+   
     let movies = await Movie.find({
         "users": {
             "$elemMatch": {user: user._id}
@@ -117,8 +111,6 @@ const deleteMovie = asyncHandler( async (req, res) => {
 
 const rateMovie = asyncHandler( async (req, res) => {
 
-    console.log(req.params.rating)
-    console.log(req.params.id)
 
     const movie = await Movie.findOneAndUpdate({_id: req.params.id},
         {
@@ -145,12 +137,7 @@ const rateMovie = asyncHandler( async (req, res) => {
         })
 
 
-    // const movie = await Movie.findOne({_id: req.params.id});
-
-    // const user = movie.users.filter(user => user === req.user.id)[0];
    
-    // console.log(user)
-
     if(!movie){
         res.status(400);
         throw new Error("Movie not found");

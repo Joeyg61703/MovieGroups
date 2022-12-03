@@ -8,6 +8,7 @@ import { addMovie } from "../../features/movies/movieSlice";
 const SearchMovies = () => {
   const [moviesFound, setMoviesFound] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [lastSearch, setLastSearch] = useState("");
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -22,7 +23,8 @@ const SearchMovies = () => {
     );
     const movies = await request.data.results.splice(0, 12);
     setMoviesFound(movies);
-    //console.log(movies)
+    setLastSearch(searchTerm);
+    
   };
 
   useEffect(() => {
@@ -35,6 +37,7 @@ const SearchMovies = () => {
       className="top-rated-movie tr-movie-bg"
       style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
     >
+      {!lastSearch && <h2 className="title text-center">Search Movies</h2>}
       <form
         className="d-flex flex-row   p-5 justify-content-center align-items-center"
         action=""
@@ -44,6 +47,7 @@ const SearchMovies = () => {
           type="text"
           name="searchText"
           placeholder=""
+          maxLength={30}
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -61,7 +65,7 @@ const SearchMovies = () => {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <div className="section-title text-center mb-50">
-              <h2 className="title">Movies</h2>
+              {lastSearch && <h2 className="title">{lastSearch} Movies</h2>}
             </div>
           </div>
         </div>

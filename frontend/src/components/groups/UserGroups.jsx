@@ -15,18 +15,18 @@ const UserGroups = () => {
     const awaitGroups = async () => {
       const groups = await dispatch(getMyGroups());
 
-     // console.log("Groups:", groups.payload);
-     // console.log(user._id);
+
       setMyGroups(groups.payload);
     };
     awaitGroups();
+    
   }, []);
   return (
     <div className="container">
       <div className="col justify-content-center">
         <h1 className="text-center">My Groups</h1>
         <div>
-          {myGroups.map((elem) => {
+          {myGroups?.map((elem) => {
             const {name, _id: id } = elem;
             return (
               <div key={id} className="row justify-content-between align-items-center p-3 border border-dark">

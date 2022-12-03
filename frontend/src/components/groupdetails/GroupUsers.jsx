@@ -15,7 +15,7 @@ const GroupUsers = ({users, groupData}) => {
   const dispatch = useDispatch();
   
   const url = window.location.href.split("/");
-  const groupName = url[url.length - 1];
+  const groupName = url[url.length - 1].replace("%20", " ");
   
   const makeOwnerCall = async (userName) => {
     await dispatch(makeOwner({groupName, userName}));

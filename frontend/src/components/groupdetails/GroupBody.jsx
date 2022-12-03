@@ -36,8 +36,7 @@ const GroupBody = () => {
     }
     
     const url = window.location.href.split("/");
-    const groupName = url[url.length - 1];
-    let inGroup = false;
+    let groupName = url[url.length - 1].replaceAll("%20", " ");
 
     const getData = async () => {
       const data = await dispatch(getGroupData(groupName));
@@ -74,6 +73,7 @@ const GroupBody = () => {
       style={{ backgroundImage: 'url("../../img/bg/tr_movies_bg.jpg")' }}
     >
       <div className="container">
+            <h1 className="title text-center">{groupName}</h1>
         <div className="row justify-content-center">
             <li className={"mr-5 bg-transparent sub-nav users sub-nav-active"} onClick={()=>{handleClick("users")}}>Users</li>
             <li className={"bg-transparent sub-nav movies"} onClick={()=>{handleClick("movies")}}>Movies</li>
