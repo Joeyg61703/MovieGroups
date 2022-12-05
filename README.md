@@ -13,6 +13,7 @@ Website for movie enthusiasts who want to share their passion for movies with ot
 ## Optimizations:
 1. Use more components to reduce code that is sometimes reused.
 2. Find the sweet spot for image quality and performance.  
+3. Add lazy loading to more pages.
 
 
 
@@ -29,3 +30,7 @@ learn more about movies and find related movies!
   
 <img src="https://user-images.githubusercontent.com/97909100/205504562-371313b0-e08c-4a09-8f17-8a5f1a8ea667.gif" width="800" height="400"/>
 
+## Group Movies
+See what movies rank the best (or worst) between you and your friends!  
+
+<img src="https://user-images.githubusercontent.com/97909100/205713102-52236437-158f-4937-9d64-5f13dfc1a74d.gif" width="800" height="400"/>
