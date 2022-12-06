@@ -13,7 +13,7 @@ Website for movie enthusiasts who want to share their passion for movies with ot
 ## Optimizations:
 1. Use more components to reduce code that is sometimes reused.
 2. Find the sweet spot for image quality and performance.  
-3. Add lazy loading to more pages.
+3. Add lazy loading to more pages for faster loads.
 
 
 
